@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html class="gr__1410inc_xyz"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Items</title>
+
+<link rel="shortcut icon" href="Items_files/inventory.ico">
+
+
+<link rel="stylesheet" href="Items_files/bootstrap.css">
+<link rel="stylesheet" href="Items_files/bootstrap-theme.css">
+<link rel="stylesheet" href="Items_files/font-awesome.css">
+<link rel="stylesheet" href="Items_files/font-awesome-animation.css">
+<link rel="stylesheet" href="Items_files/select2.css">
+<script src="Items_files/jquery.js"></script>
+<script src="Items_files/bootstrap.js"></script>
+<script src="Items_files/select2.js"></script>
+
+<link rel="stylesheet" href="Items_files/main.css">
+
+<script src="Items_files/main.js"></script>
+</head>
+<body data-gr-c-s-loaded="true">
+<nav class="navbar navbar-default hidden-print">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="https://1410inc.xyz/mini-inventory-and-sales-management-system/" style="margin-top:-15px">
+<img src="Items_files/logo_black.png" alt="logo" class="img-responsive" width="73px">
+</a>
+</div>
+
+<div class="collapse navbar-collapse" id="navbarCollapse">
+<ul class="nav navbar-nav navbar-left visible-xs">
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/dashboard">
+<i class="fa fa-home"></i>
+Dashboard
+</a>
+</li>
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/transactions">
+<i class="fa fa-exchange"></i>
+Transactions
+</a>
+</li>
+<li class="active">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items">
+<i class="fa fa-cart-plus"></i>
+Inventory Items
+</a>
+</li>
+
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/dbmanagement">
+<i class="fa fa-database"></i>
+Database Management
+</a>
+</li>
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/administrators">
+<i class="fa fa-user"></i>
+Admin Management
+</a>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+<a>
+Total Earned Today: <b>₦<span id="totalEarnedToday">0.00</span></b>
+</a>
+</li>
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+<i class="fa fa-user navbarIcons"></i>
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li class="dropdown-menu-header text-center">
+<strong>Account</strong>
+</li>
+<li class="divider"></li>
+
+<li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+</ul>
+</li>
+ </ul>
+</div>
+</div>
+</nav>
+<div class="container-fluid hidden-print">
+<div class="row content">
+
+<div class="col-sm-2 sidenav hidden-xs mySideNav">
+<br>
+<ul class="nav nav-pills nav-stacked pointer">
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/dashboard">
+<i class="fa fa-home"></i>
+Dashboard
+</a>
+</li>
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/transactions">
+<i class="fa fa-exchange"></i>
+Transactions
+</a>
+</li>
+<li class="active">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items">
+<i class="fa fa-shopping-cart"></i>
+Inventory Items
+</a>
+ </li>
+
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/dbmanagement">
+<i class="fa fa-database"></i>
+Database Management
+</a>
+</li>
+<li class="">
+<a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/administrators">
+<i class="fa fa-user"></i>
+Admin Management
+</a>
+</li>
+</ul>
+<br>
+</div>
+
+<br>
+
+<div class="col-sm-10">
+<div class="pwell hidden-print">
+<div class="row">
+<div class="col-sm-12">
+
+<div class="row">
+<div class="col-sm-12">
+<div class="col-sm-2 form-inline form-group-sm">
+<button class="btn btn-primary btn-sm" id="createItem">Add New Item</button>
+</div>
+<div class="col-sm-3 form-inline form-group-sm">
+<label for="itemsListPerPage">Show</label>
+<select id="itemsListPerPage" class="form-control">
+<option value="1">1</option>
+<option value="5">5</option>
+<option value="10" selected="selected">10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="20">20</option>
+<option value="30">30</option>
+<option value="50">50</option>
+<option value="100">100</option>
+</select>
+<label>per page</label>
+</div>
+<div class="col-sm-4 form-group-sm form-inline">
+<label for="itemsListSortBy">Sort by</label>
+<select id="itemsListSortBy" class="form-control">
+<option value="name-ASC" selected="selected">Item Name (A-Z)</option>
+<option value="code-ASC">Item Code (Ascending)</option>
+<option value="unitPrice-DESC">Unit Price (Highest first)</option>
+<option value="quantity-DESC">Quantity (Highest first)</option>
+<option value="name-DESC">Item Name (Z-A)</option>
+<option value="code-DESC">Item Code (Descending)</option>
+<option value="unitPrice-ASC">Unit Price (lowest first)</option>
+<option value="quantity-ASC">Quantity (lowest first)</option>
+</select>
+</div>
+<div class="col-sm-3 form-inline form-group-sm">
+ <label for="itemSearch"><i class="fa fa-search"></i></label>
+<input id="itemSearch" class="form-control" placeholder="Search Items" type="search">
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<hr>
+
+<div class="row">
+<div class="col-sm-12">
+
+<div class="col-sm-4 hidden" id="createNewItemDiv">
+<div class="well">
+<button class="btn btn-info btn-xs pull-left" id="useBarcodeScanner">Use Scanner</button>
+<button class="close cancelAddItem">×</button><br>
+<form name="addNewItemForm" id="addNewItemForm" role="form">
+<div class="text-center errMsg" id="addCustErrMsg"></div>
+<br>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemCode">Item Code</label>
+<input id="itemCode" name="itemCode" placeholder="Item Code" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemCodeErr')" autofocus="" type="text">
+
+<span class="help-block errMsg" id="itemCodeErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemName">Item Name</label>
+<input id="itemName" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
+<span class="help-block errMsg" id="itemNameErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemQuantity">Quantity</label>
+<input id="itemQuantity" name="itemQuantity" placeholder="Available Quantity" class="form-control" min="0" onchange="checkField(this.value, 'itemQuantityErr')" type="number">
+<span class="help-block errMsg" id="itemQuantityErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="unitPrice">(₦)Unit Price</label>
+<input id="itemPrice" name="itemPrice" placeholder="(₦)Unit Price" class="form-control" onchange="checkField(this.value, 'itemPriceErr')" type="text">
+<span class="help-block errMsg" id="itemPriceErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemDescription" class="">Description (Optional)</label>
+<textarea class="form-control" id="itemDescription" name="itemDescription" rows="4" placeholder="Optional Item Description"></textarea>
+</div>
+</div>
+<br>
+<div class="row text-center">
+<div class="col-sm-6 form-group-sm">
+<button class="btn btn-primary btn-sm" id="addNewItem">Add Item</button>
+</div>
+<div class="col-sm-6 form-group-sm">
+<button type="reset" id="cancelAddItem" class="btn btn-danger btn-sm cancelAddItem" form="addNewItemForm">Cancel</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+<div class="col-sm-12" id="itemsListDiv">
+
+<div class="row">
+<div class="col-sm-12" id="itemsListTable">
+<div class="col-sm-6">
+    Showing 1-10 of 105</div>
+
+<div class="col-sm-6 text-right"><b>Items Total Worth/Price:</b> ₦123,203,884,110.82</div>
+
+<div class="col-xs-12">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Items</div>
+                <div class="table table-responsive">
+            <table class="table table-bordered table-striped" style="background-color: #f5f5f5">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>ITEM NAME</th>
+                        <th>ITEM CODE</th>
+                        <th>DESCRIPTION</th>
+                        <th>QTY IN STOCK</th>
+                        <th>UNIT PRICE</th>
+                        <th>TOTAL SOLD</th>
+                        <th>TOTAL EARNED ON ITEM</th>
+                        <th>UPDATE QUANTITY</th>
+                        <th>EDIT</th>
+                        <th>DELETE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                        <tr>
+                        <input value="374" class="curItemId" type="hidden">
+                        <th class="itemSN">1.</th>
+                        <td><span id="itemName-374">4</span></td>
+                        <td><span id="itemCode-374">4</span></td>
+                        <td>
+                            <span id="itemDesc-374" data-toggle="tooltip" title="4" data-placement="auto">
+                                4                            </span>
+                        </td>
+                        <td class="">
+                            <span id="itemQuantity-374">48</span>
+                        </td>
+                        <td>₦<span id="itemPrice-374">4.00</span></td>
+                        <td>8</td>
+                        <td>
+                            ₦800.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-374">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-374"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="371" class="curItemId" type="hidden">
+                        <th class="itemSN">2.</th>
+                        <td><span id="itemName-371">as</span></td>
+                        <td><span id="itemCode-371">66966763</span></td>
+                        <td>
+                            <span id="itemDesc-371" data-toggle="tooltip" title="" data-placement="auto">
+                                                            </span>
+                        </td>
+                        <td class="">
+                            <span id="itemQuantity-371">350</span>
+                        </td>
+                        <td>₦<span id="itemPrice-371">10.00</span></td>
+                        <td></td>
+                        <td>
+                            ₦0.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-371">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-371"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="361" class="curItemId" type="hidden">
+                        <th class="itemSN">3.</th>
+                        <td><span id="itemName-361">asdasd</span></td>
+                        <td><span id="itemCode-361">asd</span></td>
+                        <td>
+                            <span id="itemDesc-361" data-toggle="tooltip" title="asdasdasdasd" data-placement="auto">
+                                asdasdasdasd                            </span>
+                        </td>
+                        <td class="bg-danger">
+                            <span id="itemQuantity-361">0</span>
+                        </td>
+                        <td>₦<span id="itemPrice-361">20.00</span></td>
+                        <td>8</td>
+                        <td>
+                            ₦160.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-361">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-361"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="368" class="curItemId" type="hidden">
+                        <th class="itemSN">4.</th>
+                        <td><span id="itemName-368">biogesic</span></td>
+                        <td><span id="itemCode-368">90</span></td>
+                        <td>
+                            <span id="itemDesc-368" data-toggle="tooltip" title="sakit sa ulo" data-placement="auto">
+                                sakit sa ulo                            </span>
+                        </td>
+                        <td class="bg-warning">
+                            <span id="itemQuantity-368">16</span>
+                        </td>
+                        <td>₦<span id="itemPrice-368">20.00</span></td>
+                        <td>4</td>
+                        <td>
+                            ₦80.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-368">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-368"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="363" class="curItemId" type="hidden">
+                        <th class="itemSN">5.</th>
+                        <td><span id="itemName-363">Cocacola</span></td>
+                        <td><span id="itemCode-363">coke</span></td>
+                        <td>
+                            <span id="itemDesc-363" data-toggle="tooltip" title="test" data-placement="auto">
+                                test                            </span>
+                        </td>
+                        <td class="">
+                            <span id="itemQuantity-363">505</span>
+                        </td>
+                        <td>₦<span id="itemPrice-363">180.00</span></td>
+                        <td>5</td>
+                        <td>
+                            ₦900.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-363">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-363"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="369" class="curItemId" type="hidden">
+                        <th class="itemSN">6.</th>
+                        <td><span id="itemName-369">Foo Bar</span></td>
+                        <td><span id="itemCode-369">foobar</span></td>
+                        <td>
+                            <span id="itemDesc-369" data-toggle="tooltip" title="Foo bar thingy." data-placement="auto">
+                                Foo bar thingy.                            </span>
+                        </td>
+                        <td class="bg-warning">
+                            <span id="itemQuantity-369">12</span>
+                        </td>
+                        <td>₦<span id="itemPrice-369">6.50</span></td>
+                        <td></td>
+                        <td>
+                            ₦0.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-369">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-369"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="255" class="curItemId" type="hidden">
+                        <th class="itemSN">7.</th>
+                        <td><span id="itemName-255">ganozhi soap</span></td>
+                        <td><span id="itemCode-255">001</span></td>
+                        <td>
+                            <span id="itemDesc-255" data-toggle="tooltip" title="ganozhi soap for making dxn" data-placement="auto">
+                                ganozhi soap for making dxn                            </span>
+                        </td>
+                        <td class="">
+                            <span id="itemQuantity-255">276</span>
+                        </td>
+                        <td>₦<span id="itemPrice-255">7.00</span></td>
+                        <td>33</td>
+                        <td>
+                            ₦16,298.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-255">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-255"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="330" class="curItemId" type="hidden">
+                        <th class="itemSN">8.</th>
+                        <td><span id="itemName-330">ghghg</span></td>
+                        <td><span id="itemCode-330">hhggh</span></td>
+                        <td>
+                            <span id="itemDesc-330" data-toggle="tooltip" title="hjh" data-placement="auto">
+                                hjh                            </span>
+                        </td>
+                        <td class="">
+                            <span id="itemQuantity-330">75</span>
+                        </td>
+                        <td>₦<span id="itemPrice-330">887.00</span></td>
+                        <td></td>
+                        <td>
+                            ₦0.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-330">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-330"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="236" class="curItemId" type="hidden">
+                        <th class="itemSN">9.</th>
+                        <td><span id="itemName-236">hazme khas</span></td>
+                        <td><span id="itemCode-236">237</span></td>
+                        <td>
+                            <span id="itemDesc-236" data-toggle="tooltip" title="" data-placement="auto">
+                                                            </span>
+                        </td>
+                        <td class="bg-danger">
+                            <span id="itemQuantity-236">1</span>
+                        </td>
+                        <td>₦<span id="itemPrice-236">15.00</span></td>
+                        <td>47</td>
+                        <td>
+                            ₦705.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-236">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-236"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                            <tr>
+                        <input value="248" class="curItemId" type="hidden">
+                        <th class="itemSN">10.</th>
+                        <td><span id="itemName-248">hello world</span></td>
+                        <td><span id="itemCode-248">40000000</span></td>
+                        <td>
+                            <span id="itemDesc-248" data-toggle="tooltip" title="" data-placement="auto">
+                                                            </span>
+                        </td>
+                        <td class="bg-danger">
+                            <span id="itemQuantity-248">0</span>
+                        </td>
+                        <td>₦<span id="itemPrice-248">1.00</span></td>
+                        <td>1</td>
+                        <td>
+                            ₦1.00                        </td>
+                        <td><a class="pointer updateStock" id="stock-248">Update Quantity</a></td>
+                        <td class="text-center text-primary">
+                            <span class="editItem" id="edit-248"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>
+                    </tr>
+                                                        </tbody>
+            </table>
+        </div>
+        <!-- table div end-->
+            </div>
+    <!--- panel end-->
+</div>
+
+<!---Pagination div-->
+<div class="col-sm-12 text-center">
+    <ul class="pagination">
+        <ul class="pagination"><li><a><b style="color:black">1</b></a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li><li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li></ul>    </ul>
+</div></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div id="updateStockModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Update Stock</h4>
+<div id="stockUpdateFMsg" class="text-center"></div>
+</div>
+<div class="modal-body">
+<form name="updateStockForm" id="updateStockForm" role="form">
+<div class="row">
+<div class="col-sm-4 form-group-sm">
+<label>Item Name</label>
+<input readonly="readonly" id="stockUpdateItemName" class="form-control" type="text">
+</div>
+<div class="col-sm-4 form-group-sm">
+<label>Item Code</label>
+<input readonly="readonly" id="stockUpdateItemCode" class="form-control" type="text">
+</div>
+<div class="col-sm-4 form-group-sm">
+<label>Quantity in Stock</label>
+<input readonly="readonly" id="stockUpdateItemQInStock" class="form-control" type="text">
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-sm-6 form-group-sm">
+<label for="stockUpdateType">Update Type</label>
+<select id="stockUpdateType" class="form-control checkField">
+<option value="" selected="selected">---</option>
+<option value="newStock">New Stock</option>
+<option value="deficit">Deficit</option>
+</select>
+<span class="help-block errMsg" id="stockUpdateTypeErr"></span>
+</div>
+<div class="col-sm-6 form-group-sm">
+<label for="stockUpdateQuantity">Quantity</label>
+<input id="stockUpdateQuantity" placeholder="Update Quantity" class="form-control checkField" min="0" type="number">
+<span class="help-block errMsg" id="stockUpdateQuantityErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="stockUpdateDescription" class="">Description</label>
+<textarea class="form-control checkField" id="stockUpdateDescription" placeholder="Update Description"></textarea>
+<span class="help-block errMsg" id="stockUpdateDescriptionErr"></span>
+</div>
+</div>
+<input id="stockUpdateItemId" type="hidden">
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" id="stockUpdateSubmit">Update</button>
+<button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="editItemModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Edit Item</h4>
+<div id="editItemFMsg" class="text-center"></div>
+</div>
+<div class="modal-body">
+<form role="form">
+<div class="row">
+<div class="col-sm-4 form-group-sm">
+<label for="itemNameEdit">Item Name</label>
+<input id="itemNameEdit" placeholder="Item Name" autofocus="" class="form-control checkField" type="text">
+<span class="help-block errMsg" id="itemNameEditErr"></span>
+</div>
+<div class="col-sm-4 form-group-sm">
+<label for="itemCode">Item Code</label>
+<input id="itemCodeEdit" class="form-control" type="text">
+<span class="help-block errMsg" id="itemCodeEditErr"></span>
+</div>
+<div class="col-sm-4 form-group-sm">
+<label for="unitPrice">Unit Price</label>
+<input id="itemPriceEdit" name="itemPrice" placeholder="Unit Price" class="form-control checkField" type="text">
+<span class="help-block errMsg" id="itemPriceEditErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemDescriptionEdit" class="">Description (Optional)</label>
+<textarea class="form-control" id="itemDescriptionEdit" placeholder="Optional Item Description"></textarea>
+</div>
+</div>
+<input id="itemIdEdit" type="hidden">
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" id="editItemSubmit">Save</button>
+<button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+<script src="Items_files/items.js"></script> </div>
+
+</div>
+</div>
+<footer class="container-fluid text-center hidden-print">
+<p>
+<i class="fa fa-copyright"></i>
+Copyright <a href="http://www.amirsanni.com/">Amir Sanni</a> (2016)
+</p>
+</footer>
+
+<div id="flashMsgModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" id="flashMsgHeader">
+<button type="button" class="close" data-dismiss="modal">×</button>
+<center><i id="flashMsgIcon" class=""></i> <font id="flashMsg"></font></center>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" role="dialog" data-backdrop="static" id="transReceiptModal">
+<div class="modal-dialog modal-sm">
+<div class="modal-content">
+<div class="modal-header hidden-print">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Transaction Receipt</h4>
+</div>
+<div class="modal-body" id="transReceipt"></div>
+</div>
+</div>
+</div>
+
+ 
+<div class="modal fade" role="dialog" data-backdrop="static" id="logInModal">
+<div class="modal-dialog">
+
+<div class="modal-content">
+<div class="modal-header">
+<button class="close closeLogInModal">×</button>
+<h4 class="text-center">Log In</h4>
+<div id="logInModalFMsg" class="text-center errMsg"></div>
+</div>
+<div class="modal-body">
+<form name="logInModalForm">
+<div class="row">
+<div class="col-sm-12 form-group">
+<label for="logInModalEmail" class="control-label">E-mail</label>
+<input id="logInModalEmail" class="form-control checkField" placeholder="E-mail" autofocus="" type="email">
+<span class="help-block errMsg" id="logInModalEmailErr"></span>
+</div>
+<div class="col-sm-12 form-group">
+<label for="logInPassword" class="control-label">Password</label>
+<input id="logInModalPassword" class="form-control checkField" placeholder="Password" type="password">
+<span class="help-block errMsg" id="logInModalPasswordErr"></span>
+</div>
+</div>
+<div class="row">
+
+<div class="col-sm-4"></div>
+<div class="col-sm-2 pull-right">
+<button id="loginModalSubmit" class="btn btn-primary">Log in</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+</div>
+</div>
+
+
+</body></html>

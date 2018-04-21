@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="gr__17sucai_com"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Inventory management system</title>
+<link rel="stylesheet" href="../static/Items_files/bootstrap.css">
+ 
+<script type="text/javascript" src="../static/Items_files/jquery1.js"></script>
+<script type="text/javascript" src="../static/Items_files/bootstrap.js"></script>
+<style type="text/css">
+body{ background:#0066A8 url(../static/Items_files/img/login_bg.png) no-repeat center 0px;}
+.tit{ margin:auto; margin-top:170px; text-align:center; width:350px; padding-bottom:20px;}
+.login-wrap{ width:220px; padding:30px 50px 0 330px; height:220px; background:#fff url(../static/Items_files/img/20150212154319.jpg) no-repeat 30px 40px; margin:auto; overflow: hidden;}
+.login_input{ display:block;width:210px;}
+.login_user{ background: url(../static/Items_files/img/input_icon_1.png) no-repeat 200px center; font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif}
+.login_password{ background: url(../static/Items_files/img/input_icon_2.png) no-repeat 200px center; font-family:"Courier New", Courier, monospace}
+.btn-login{ background:#40454B; box-shadow:none; text-shadow:none; color:#fff; border:none;height:35px; line-height:26px; font-size:14px; font-family:"microsoft yahei";}
+.btn-login:hover{ background:#333; color:#fff;}
+.copyright{ margin:auto; margin-top:10px; text-align:center; width:370px; color:#CCC}
+@media (max-height: 700px) {.tit{ margin:auto; margin-top:100px; }}
+@media (max-height: 500px) {.tit{ margin:auto; margin-top:50px; }}
+</style>
+</head>
+
+<body data-gr-c-s-loaded="true">
+<div class="tit"><h1><font color="white">Inventory management system</font></h1></div>
+<div class="login-wrap">
+    {{  info }}
+    <form id="loginForm" action="/login" method="get">
+  <table width="100%" cellspacing="0" cellpadding="0" border="0">
+
+    <tbody><tr>
+      <td valign="bottom" height="25">account：</td>
+    </tr>
+    <tr>
+      <td><input name="username" class="login_input login_user" value="admin" type="text"></td>
+    </tr>
+    <tr>
+      <td valign="bottom" height="35">password：</td>
+    </tr>
+    <tr>
+      <td><input name="password" class="login_input login_password" value="12345678" type="password"></td>
+    </tr>
+    <tr>
+      <td valign="bottom" height="60"><a href="javascript:Login()" class="btn btn-block btn-login">Login</a></td>
+    </tr>
+   
+  </tbody></table>
+        </form>
+</div>
+
+
+
+</body><script type="text/javascript">
+    function Login() {
+        $('#loginForm').submit();
+    }
+
+
+    </script>
+    </html>

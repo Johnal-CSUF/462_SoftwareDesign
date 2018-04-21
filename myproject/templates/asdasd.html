@@ -1,0 +1,14 @@
+{% extends "./parent.html" %}
+
+{% if decision %}
+<h1>{{ hello }}</h1>
+{% endif %}
+<h2> {{dudu|upper}} </h2>
+
+<h3> {{ list.a }} </h3>
+<h4> {{ list.b }} </h4>
+
+{% block content %} <p> combine </p>
+{% endblock %}
+
+{% include "./base.html" %}

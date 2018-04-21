@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="gr__1410inc_xyz"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Items</title>
+
+<link rel="shortcut icon" href="../static/Items_files/inventory.ico">
+
+
+<link rel="stylesheet" href="../static/Items_files/bootstrap.css">
+<link rel="stylesheet" href="../static/Items_files/bootstrap-theme.css">
+<link rel="stylesheet" href="../static/Items_files/font-awesome.css">
+<link rel="stylesheet" href="../static/Items_files/font-awesome-animation.css">
+<link rel="stylesheet" href="../static/Items_files/select2.css">
+<script src="../static/Items_files/jquery.js"></script>
+<script src="../static/Items_files/bootstrap.js"></script>
+<script src="../static/Items_files/select2.js"></script>
+
+<link rel="stylesheet" href="../static/Items_files/main.css">
+
+<script src="../static/Items_files/main.js"></script>
+</head>
+<body data-gr-c-s-loaded="true">
+<nav class="navbar navbar-default hidden-print">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="" style="margin-top:-15px">
+<img src="../static/Items_files/inventory.ico" alt="logo" class="img-responsive" width="57px">
+</a>
+</div>
+
+
+
+</nav>
+<div class="container-fluid hidden-print">
+<div class="row content">
+
+<div class="col-sm-2 sidenav hidden-xs mySideNav">
+<br>
+<ul class="nav nav-pills nav-stacked pointer">
+<li class="">
+<a href="">
+<i class="fa fa-home"></i>
+Dashboard
+</a>
+</li>
+<li class="">
+<a href="{%url 'transaction'%}">
+<i class="fa fa-exchange"></i>
+Transactions
+</a>
+</li>
+<li class="">
+<a href="{%url 'search'%}">
+<i class="fa fa-exchange"></i>
+Search Items
+</a>
+</li>
+<li class="active">
+<a href="{%url 'hello'%}">
+<i class="fa fa-shopping-cart"></i>
+Inventory Items
+</a>
+ </li>
+
+<li class="">
+<a href="">
+<i class="fa fa-database"></i>
+Database Management
+</a>
+</li>
+<li class="">
+<a href="">
+<i class="fa fa-user"></i>
+Admin Management
+</a>
+</li>
+</ul>
+<br>
+</div>
+
+<br>
+
+<div class="col-sm-10">
+<div class="pwell hidden-print">
+<div class="row">
+<div class="col-sm-12">
+
+<div class="row">
+<!--< class="col-sm-12">-->
+<div class="col-sm-2 form-inline form-group-sm">
+<!--<button class="btn btn-primary btn-sm" id="createItem">Add New Item</button>-->
+</div>
+    <input hidden id="pageNumber" value="{{ limit }}">
+    <input hidden id="sortNumber" value="{{ sortNumber }}">
+    <form id="formSearch" action="/items" method="get">
+<div class="col-sm-3 form-inline form-group-sm">
+<label for="limit">Show</label>
+<select id="limit" onchange="simulate(0)" name="limit" class="form-control">
+<option id="1" value="1">1</option>
+<option id="5" value="5">5</option>
+<option id="10" value="10">10</option>
+<option id="15" value="15">15</option>
+<option id="20" value="20">20</option>
+<option id="25" value="20">20</option>
+<option id="30" value="30">30</option>
+<option id="50" value="50">50</option>
+<option id="100" value="100">100</option>
+</select><input hidden name="page" value="0">
+<label>per page</label>
+</div>
+<div class="col-sm-4 form-group-sm form-inline">
+<label for="sortby">Sort by</label>
+<select id="sortby" name="sortby" onchange="simulate(0)" class="form-control">
+<option name="0" value="0">Description (A-Z)</option>
+<option name="1" value="1">Item Number (Ascending)</option>
+<option name="2" value="2">Price (lowest first)</option>
+<option name="3" value="3">Quantity (lowest first)</option>
+<option name="4" value="4">Description (Z-A)</option>
+<option name="5" value="5">Item Number (Descending)</option>
+<option name="6" value="6">Price (Highest first)</option>
+<option name="7" value="7">Quantity (Highest first)</option>
+</select>
+</div>
+<div class="col-sm-3 form-inline form-group-sm">
+ <label for="itemName"><i ></i></label>
+<input id="itemName" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search">
+</div>
+</form>
+</div>
+
+</div>
+</div>
+<hr>
+
+<div class="row">
+<div class="col-sm-12">
+
+<div class="col-sm-4 hidden" id="createNewItemDiv">
+<div class="well">
+<button class="btn btn-info btn-xs pull-left" id="useBarcodeScanner">Use Scanner</button>
+<button class="close cancelAddItem">×</button><br>
+<form name="addNewItemForm" id="addNewItemForm" role="form">
+<div class="text-center errMsg" id="addCustErrMsg"></div>
+<br>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemCode">Item Code</label>
+<input id="itemCode" name="itemCode" placeholder="Item Code" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemCodeErr')" autofocus="" type="text">
+
+<span class="help-block errMsg" id="itemCodeErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemName">Item Name</label>
+<input id="itemName" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
+<span class="help-block errMsg" id="itemNameErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemQuantity">Quantity</label>
+<input id="itemQuantity" name="itemQuantity" placeholder="Available Quantity" class="form-control" min="0" onchange="checkField(this.value, 'itemQuantityErr')" type="number">
+<span class="help-block errMsg" id="itemQuantityErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="unitPrice">(₦)Unit Price</label>
+<input id="itemPrice" name="itemPrice" placeholder="(₦)Unit Price" class="form-control" onchange="checkField(this.value, 'itemPriceErr')" type="text">
+<span class="help-block errMsg" id="itemPriceErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemDescription" class="">Description (Optional)</label>
+<textarea class="form-control" id="itemDescription" name="itemDescription" rows="4" placeholder="Optional Item Description"></textarea>
+</div>
+</div>
+<br>
+<div class="row text-center">
+<div class="col-sm-6 form-group-sm">
+<button class="btn btn-primary btn-sm" id="addNewItem">Add Item</button>
+</div>
+<div class="col-sm-6 form-group-sm">
+<button type="reset" id="cancelAddItem" class="btn btn-danger btn-sm cancelAddItem" form="addNewItemForm">Cancel</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+    <!--<p>{{ test }}}</p>
+    <p>{{ enen }}</p>-->
+<div class="col-sm-12" id="itemsListDiv">
+
+<div class="row">
+<div class="col-sm-12" id="itemsListTable">
+<div class="col-sm-6">
+    Showing {{ firstIndex }}-{{ lastIndex }} </div>
+
+<!--<div class="col-sm-6 text-right"><b>Items Total Worth/Price:</b> ₦123,203,884,110.82</div>-->
+
+<div class="col-xs-12">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Items</div>
+                <div class="table table-responsive">
+            <table class="table table-bordered table-striped" style="background-color: #f5f5f5">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>ITEM ID</th>
+                        <th>QTY IN STOCK</th>
+                        <th>UNIT PRICE</th>
+                        <th>CLASS</th>
+                        <th>ORIGIN</th>
+                        <th>LEAD TIME</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+
+                                        <tr>
+                        <input class="curItemId" type="hidden">
+                        <!--<th class="itemSN">1.</th>-->
+                        <td><span>{{ item.description }}</span></td>
+                        <td><span>{{ item.id }}</span></td>
+                        <td class="">
+                            <span >{{ item.quantity }}</span>
+                        </td>
+                        <td>$<span>{{ item.price }} </span></td>
+                        <td>{{ item.class }}</td>
+                        <td>
+                            {{ item.origin}}                       </td>
+                                            <td>
+                            {{ item.leadTime}}                       </td>
+                        <!--<td class="text-center text-primary">
+                            <span class="editItem" id="edit-374"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>-->
+                    </tr>
+                        {% endfor %}
+                                                        </tbody>
+            </table>
+        </div>
+        <!-- table div end-->
+            </div>
+    <!--- panel end-->
+</div>
+
+<!---Pagination div-->
+<div class="col-sm-12 text-center">
+    <ul class="pagination">
+        {% for i in totalPage %}
+        {% if i < 3 %}
+            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{i}}</b></a></li></ul>
+        {% endif %}
+        {% if i == 3 %}
+            <ul class="pagination"><li><a>...</a></li></ul>
+        {% endif %}
+        {% if totalPageNumber >= i and totalPageNumber1 < i %}
+            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{ i }}</b></a></li></ul>
+        {% endif %}
+    {% endfor %}
+            <!--<a href="" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li>
+            <a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
+        </ul>    </ul>-->
+</div></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div id="updateStockModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Update Stock</h4>
+<div id="stockUpdateFMsg" class="text-center"></div>
+</div>
+<div class="modal-body">
+<form name="updateStockForm" id="updateStockForm" role="form">
+<div class="row">
+<div class="col-sm-4 form-group-sm">
+<label>Item Name</label>
+<input readonly="readonly" id="stockUpdateItemName" class="form-control" type="text">
+</div>
+<div class="col-sm-4 form-group-sm">
+<label>Item Code</label>
+<input readonly="readonly" id="stockUpdateItemCode" class="form-control" type="text">
+</div>
+<div class="col-sm-4 form-group-sm">
+<label>Quantity in Stock</label>
+<input readonly="readonly" id="stockUpdateItemQInStock" class="form-control" type="text">
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-sm-6 form-group-sm">
+<label for="stockUpdateType">Update Type</label>
+<select id="stockUpdateType" class="form-control checkField">
+<option value="" selected="selected">---</option>
+<option value="newStock">New Stock</option>
+<option value="deficit">Deficit</option>
+</select>
+<span class="help-block errMsg" id="stockUpdateTypeErr"></span>
+</div>
+<div class="col-sm-6 form-group-sm">
+<label for="stockUpdateQuantity">Quantity</label>
+<input id="stockUpdateQuantity" placeholder="Update Quantity" class="form-control checkField" min="0" type="number">
+<span class="help-block errMsg" id="stockUpdateQuantityErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="stockUpdateDescription" class="">Description</label>
+<textarea class="form-control checkField" id="stockUpdateDescription" placeholder="Update Description"></textarea>
+<span class="help-block errMsg" id="stockUpdateDescriptionErr"></span>
+</div>
+</div>
+<input id="stockUpdateItemId" type="hidden">
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" id="stockUpdateSubmit">Update</button>
+<button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="editItemModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Edit Item</h4>
+<div id="editItemFMsg" class="text-center"></div>
+</div>
+<div class="modal-body">
+<form role="form">
+<div class="row">
+<div class="col-sm-4 form-group-sm">
+<label for="itemNameEdit">Item Name</label>
+<input id="itemNameEdit" placeholder="Item Name" autofocus="" class="form-control checkField" type="text">
+<span class="help-block errMsg" id="itemNameEditErr"></span>
+</div>
+<div class="col-sm-4 form-group-sm">
+<label for="itemCode">Item Code</label>
+<input id="itemCodeEdit" class="form-control" type="text">
+<span class="help-block errMsg" id="itemCodeEditErr"></span>
+</div>
+<div class="col-sm-4 form-group-sm">
+<label for="unitPrice">Unit Price</label>
+<input id="itemPriceEdit" name="itemPrice" placeholder="Unit Price" class="form-control checkField" type="text">
+<span class="help-block errMsg" id="itemPriceEditErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemDescriptionEdit" class="">Description (Optional)</label>
+<textarea class="form-control" id="itemDescriptionEdit" placeholder="Optional Item Description"></textarea>
+</div>
+</div>
+<input id="itemIdEdit" type="hidden">
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" id="editItemSubmit">Save</button>
+<button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+
+<script src="Items_files/items.js"></script> </div>
+
+</div>
+</div>
+<footer class="container-fluid text-center hidden-print">
+<p>
+<i class="fa fa-copyright"></i>
+Copyright <a href="http://www.amirsanni.com/">Amir Sanni</a> (2016)
+</p>
+</footer>
+
+<div id="flashMsgModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" id="flashMsgHeader">
+<button type="button" class="close" data-dismiss="modal">×</button>
+<center><i id="flashMsgIcon" class=""></i> <font id="flashMsg"></font></center>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" role="dialog" data-backdrop="static" id="transReceiptModal">
+<div class="modal-dialog modal-sm">
+<div class="modal-content">
+<div class="modal-header hidden-print">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Transaction Receipt</h4>
+</div>
+<div class="modal-body" id="transReceipt"></div>
+</div>
+</div>
+</div>
+
+ 
+<div class="modal fade" role="dialog" data-backdrop="static" id="logInModal">
+<div class="modal-dialog">
+
+<div class="modal-content">
+<div class="modal-header">
+<button class="close closeLogInModal">×</button>
+<h4 class="text-center">Log In</h4>
+<div id="logInModalFMsg" class="text-center errMsg"></div>
+</div>
+<div class="modal-body">
+<form name="logInModalForm">
+<div class="row">
+<div class="col-sm-12 form-group">
+<label for="logInModalEmail" class="control-label">E-mail</label>
+<input id="logInModalEmail" class="form-control checkField" placeholder="E-mail" autofocus="" type="email">
+<span class="help-block errMsg" id="logInModalEmailErr"></span>
+</div>
+<div class="col-sm-12 form-group">
+<label for="logInPassword" class="control-label">Password</label>
+<input id="logInModalPassword" class="form-control checkField" placeholder="Password" type="password">
+<span class="help-block errMsg" id="logInModalPasswordErr"></span>
+</div>
+</div>
+<div class="row">
+
+<div class="col-sm-4"></div>
+<div class="col-sm-2 pull-right">
+<button id="loginModalSubmit" class="btn btn-primary">Log in</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    function simulate(page) {
+        $("input[name='page']").attr("value", page)
+        $('#formSearch').submit();
+    }
+
+    $(function(){
+        var num = $('#pageNumber').attr("value")
+        $('#'+num).attr("selected", "selected")
+        var sort = $('#sortNumber').attr("value")
+        $("option[name='"+sort+"']").attr("selected", "selected")
+    })
+    </script>
+    </html>

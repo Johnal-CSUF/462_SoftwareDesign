@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html class="gr__1410inc_xyz"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Bugs</title>
+
+<link rel="shortcut icon" href="../static/Items_files/inventory.ico">
+<link rel="stylesheet" href="../static/add/index_data/login.css">
+<link href="../static/add/demo.css" rel="stylesheet" media="all">
+    <script src="../static/add/hm.js"></script>
+    <script type="text/javascript" src="../static/add/jquery_002.js"></script>
+<link rel="stylesheet" href="../static/Items_files/bootstrap2.css">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function fixHeight() {
+                var headerHeight = $("#switcher").height();
+                $("#iframe").attr("height", $(window).height()-54+ "px");
+            }
+            $(window).resize(function () {
+                fixHeight();
+            }).resize();
+
+            $('.icon-monitor').addClass('active');
+
+            $(".icon-mobile-3").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width-3');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-mobile-2").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width-2');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-mobile-1").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('mobile-width');
+                $('.icon-tablet,.icon-mobile,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-tablet").click(function () {
+                $("#by").css("overflow-y", "auto");
+                $('#iframe-wrap').removeClass().addClass('tablet-width');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+
+            $(".icon-monitor").click(function () {
+                $("#by").css("overflow-y", "hidden");
+                $('#iframe-wrap').removeClass().addClass('full-width');
+                $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function Responsive($a) {
+            if ($a == true) $("#Device").css("opacity", "100");
+            if ($a == false) $("#Device").css("opacity", "0");
+            $('#iframe-wrap').removeClass().addClass('full-width');
+            $('.icon-tablet,.icon-mobile-1,.icon-monitor,.icon-mobile-2,.icon-mobile-3').removeClass('active');
+            $(this).addClass('active');
+            return false;
+        };
+    </script>
+    <script>
+			$(document).ready(function() {
+				//打开会员登录
+				$("#Login_start_").click(function() {
+					$("#regist_container").hide();
+					$("#_close").show();
+					$("#_start").animate({
+						left: '350px',
+						height: '520px',
+						width: '400px'
+					}, 500, function() {
+						$("#login_container").show(500);
+						$("#_close").animate({
+							height: '40px',
+							width: '40px'
+						}, 500);
+					});
+				});
+				//打开会员注册
+				$("#Regist_start_").click(function() {
+					$("#login_container").hide();
+					$("#_close").show();
+					$("#_start").animate({
+						left: '350px',
+						height: '520px',
+						width: '400px'
+					}, 500, function() {
+						$("#regist_container").show(500);
+						$("#_close").animate({
+							height: '40px',
+							width: '40px'
+						}, 500);
+					});
+				});
+				//关闭
+				$("#_close").click(function() {
+
+					$("#_close").animate({
+						height: '0px',
+						width: '0px'
+					}, 500, function() {
+						$("#_close").hide(500);
+						$("#login_container").hide(500);
+						$("#regist_container").hide(500);
+						$("#_start").animate({
+							left: '0px',
+							height: '0px',
+							width: '0px'
+						}, 500);
+					});
+				});
+				//去 注册
+				$("#toRegist").click(function(){
+					$("#login_container").hide(500);
+					$("#regist_container").show(500);
+				});
+				//去 登录
+				$("#toLogin").click(function(){
+					$("#regist_container").hide(500);
+					$("#login_container").show(500);
+				});
+			});
+		</script>
+<link rel="stylesheet" href="../static/Items_files/bootstrap-theme.css">
+<link rel="stylesheet" href="../static/Items_files/font-awesome.css">
+<link rel="stylesheet" href="../static/Items_files/font-awesome-animation.css">
+<link rel="stylesheet" href="../static/Items_files/select2.css">
+<script src="../static/Items_files/jquery.js"></script>
+<script src="../static/Items_files/bootstrap.js"></script>
+<script src="../static/Items_files/select2.js"></script>
+<script src="../static/add/index_data/jquery.js"></script>
+    <script src="../static/add/index_data/bootstrap.js"></script>
+<link rel="stylesheet" href="../static/Items_files/main.css">
+
+<script src="../static/Items_files/main.js"></script>
+</head>
+<body style="overflow:auto;" id="by" data-gr-c-s-loaded="true">
+<nav class="navbar navbar-default hidden-print">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarCollapse" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="" style="margin-top:-15px">
+<img src="../static/Items_files/inventory.ico" alt="logo" class="img-responsive" width="57px">
+</a>
+</div>
+<div align="right"><font size="6px"><a href="/logout">logout</a></font></div>
+
+
+</nav>
+<div class="container-fluid hidden-print">
+<div class="row content">
+
+<div class="col-sm-2 sidenav hidden-xs mySideNav">
+<br>
+<ul class="nav nav-pills nav-stacked pointer">
+<li class="">
+<a href="">
+
+Dashboard
+</a>
+</li>
+<li class="">
+<a href="{%url 'transaction'%}">
+
+Transactions
+</a>
+</li>
+
+<li class="">
+<a href="{%url 'search'%}">
+
+Search Items
+</a>
+</li>
+
+<li class="">
+<a href="{%url 'items'%}">
+
+Inventory Items
+</a>
+ </li>
+
+<li class="">
+<a href="{%url 'customer'%}">
+
+Customer
+</a>
+</li>
+<li class="active">
+<a href="{%url 'bugs'%}">
+
+Report Bugs
+</a>
+</li>
+</ul>
+<br>
+</div>
+
+<br>
+
+<div class="col-sm-10">
+<div class="pwell hidden-print">
+<!-- 会员登录  -->
+		<!--<div id='Login_start' style="position: absolute;" >-->
+		<div id="_start" style="left: 0px; height: 0px; width: 0px;position: absolute;z-index: 999;">
+			<div id="_close" style="height: 0px; width: 0px; display: none;">
+				<!--<span class="glyphicon glyphicon-remove"></span>-->
+                <a>X</a>
+			</div>
+			<br>
+			<!-- 会员注册 -->
+			<div id="regist_container" style="display: none;padding-left: 20px;">
+				<div id="lab1">
+					<span id="lab_login">New Bug Info</span>
+
+				</div>
+                <form id="add_new_bug" action="/addBug" method="get">
+				<div id="form_container2" style="padding-top: 25px;">
+
+					<input class="form-control" placeholder="Bug Short Description" name="BSD" id="BSD" type="text">
+
+					<!--<button id="getVCode" type="button" class="btn btn-success" >获取验证码</button>-->
+					<!--<input id="getVCode" class="btn btn-success" value="点击发送验证码" onclick="sendCode(this)" type="button">-->
+
+				</div>
+                </form>
+                <a href="" onclick="submit();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+			</div>
+		</div>
+<div class="row">
+<div class="col-sm-12">
+
+<div class="row">
+<!--< class="col-sm-12">-->
+<div class="col-sm-2 form-inline form-group-sm">
+<!--<button class="btn btn-primary btn-sm" id="createItem">Add New Item</button>-->
+    <!--<div id="iframe-wrap">
+    <iframe id="iframe" src="../static/add/index.htm" width="100%" height="577px" frameborder="0"></iframe>
+</div>-->
+    <a id="Regist_start_" class="btn btn-success" style="width:120px;height:40px;border-radius: 0;">Add New Bug</a>
+</div>
+    <input hidden id="pageNumber" value="{{ limit }}">
+    <input hidden id="sortNumber" value="{{ sortNumber }}">
+    <form id="formSearch" action="/bugs" method="get">
+<div class="col-sm-3 form-inline form-group-sm">
+<label for="limit">Show</label>
+<select id="limit" onchange="simulate(0)" name="limit" class="form-control">
+<option id="1" value="1">1</option>
+<option id="5" value="5">5</option>
+<option id="10" value="10">10</option>
+<option id="15" value="15">15</option>
+<option id="20" value="20">20</option>
+<option id="25" value="20">20</option>
+<option id="30" value="30">30</option>
+<option id="50" value="50">50</option>
+<option id="100" value="100">100</option>
+</select><input hidden name="page" value="0">
+<label>per page</label>
+</div>
+
+</form>
+</div>
+
+</div>
+</div>
+<hr>
+
+<div class="row">
+<div class="col-sm-12">
+
+<div class="col-sm-4 hidden" id="createNewItemDiv">
+<div class="well">
+<button class="btn btn-info btn-xs pull-left" id="useBarcodeScanner">Use Scanner</button>
+<button class="close cancelAddItem">×</button><br>
+<form name="addNewItemForm" id="addNewItemForm" role="form">
+<div class="text-center errMsg" id="addCustErrMsg"></div>
+<br>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemCode">Item Code</label>
+<input id="itemCode" name="itemCode" placeholder="Item Code" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemCodeErr')" autofocus="" type="text">
+
+<span class="help-block errMsg" id="itemCodeErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemName">Item Name</label>
+<input id="itemName" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
+<span class="help-block errMsg" id="itemNameErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemQuantity">Quantity</label>
+<input id="itemQuantity" name="itemQuantity" placeholder="Available Quantity" class="form-control" min="0" onchange="checkField(this.value, 'itemQuantityErr')" type="number">
+<span class="help-block errMsg" id="itemQuantityErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="unitPrice">(₦)Unit Price</label>
+<input id="itemPrice" name="itemPrice" placeholder="(₦)Unit Price" class="form-control" onchange="checkField(this.value, 'itemPriceErr')" type="text">
+<span class="help-block errMsg" id="itemPriceErr"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 form-group-sm">
+<label for="itemDescription" class="">Description (Optional)</label>
+<textarea class="form-control" id="itemDescription" name="itemDescription" rows="4" placeholder="Optional Item Description"></textarea>
+</div>
+</div>
+<br>
+<div class="row text-center">
+<div class="col-sm-6 form-group-sm">
+<button class="btn btn-primary btn-sm" id="addNewItem">Add Item</button>
+</div>
+<div class="col-sm-6 form-group-sm">
+<button type="reset" id="cancelAddItem" class="btn btn-danger btn-sm cancelAddItem" form="addNewItemForm">Cancel</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+    <!--<p>{{ test }}}</p>
+    <p>{{ enen }}</p>-->
+<div class="col-sm-12" id="itemsListDiv">
+
+<div class="row">
+<div class="col-sm-12" id="itemsListTable">
+<div class="col-sm-6">
+    Showing {{ firstIndex }}-{{ lastIndex }} </div>
+
+<!--<div class="col-sm-6 text-right"><b>Items Total Worth/Price:</b> ₦123,203,884,110.82</div>-->
+
+<div class="col-xs-12">
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Items</div>
+                <div class="table table-responsive">
+            <table class="table table-bordered table-striped" style="background-color: #f5f5f5">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Bug Description</th>
+                        <th>Bug ID</th>
+                        <th>Report Date</th>
+                        <th>Recorder</th>
+                        <th>Solution</th>
+                        <th>Fixer</th>
+                        <th>Fixed Time</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+
+                                        <tr>
+                        <input class="curItemId" type="hidden">
+                                            <!--<th class="itemSN">1.</th>--><td><a href="" onclick="deleteBug({{ item.id }})">delete</a></td>
+                        <td><span>{{ item.description }}</span></td>
+                        <td><span>{{ item.id }}</span></td>
+                        <td class="">
+                            <span >{{ item.reportDate }}</span>
+                        </td>
+                        <td><span>{{ item.recorder }} </span></td>
+                        <td>{{ item.solution }}</td>
+                        <td>
+                            {{ item.fixer}}                       </td>
+                                            <td>
+                            {{ item.fixedTime}}                       </td>
+                        <!--<td class="text-center text-primary">
+                            <span class="editItem" id="edit-374"><i class="fa fa-pencil pointer"></i> </span>
+                        </td>
+                        <td class="text-center"><i class="fa fa-trash text-danger delItem pointer"></i></td>-->
+                    </tr>
+                        {% endfor %}
+                                                        </tbody>
+            </table>
+        </div>
+        <!-- table div end-->
+            </div>
+    <!--- panel end-->
+</div>
+
+<!---Pagination div-->
+<div class="col-sm-12 text-center">
+    <ul class="pagination">
+        {% for i in totalPage %}
+        {% if i < 3 %}
+            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{i}}</b></a></li></ul>
+        {% endif %}
+        {% if i == 3 %}
+            <ul class="pagination"><li><a>...</a></li></ul>
+        {% endif %}
+        {% if totalPageNumber >= i and totalPageNumber1 < i %}
+            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{ i }}</b></a></li></ul>
+        {% endif %}
+    {% endfor %}
+            <!--<a href="" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li>
+            <a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
+        </ul>    </ul>-->
+</div></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+ </div>
+
+</div>
+</div>
+<footer class="container-fluid text-center hidden-print">
+<p>
+<i class="fa fa-copyright"></i>
+Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
+</p>
+</footer>
+
+<div id="flashMsgModal" class="modal fade" role="dialog" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header" id="flashMsgHeader">
+<button type="button" class="close" data-dismiss="modal">×</button>
+<center><i id="flashMsgIcon" class=""></i> <font id="flashMsg"></font></center>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" role="dialog" data-backdrop="static" id="transReceiptModal">
+<div class="modal-dialog modal-sm">
+<div class="modal-content">
+<div class="modal-header hidden-print">
+<button class="close" data-dismiss="modal">×</button>
+<h4 class="text-center">Transaction Receipt</h4>
+</div>
+<div class="modal-body" id="transReceipt"></div>
+</div>
+</div>
+</div>
+
+ 
+<div class="modal fade" role="dialog" data-backdrop="static" id="logInModal">
+<div class="modal-dialog">
+
+<div class="modal-content">
+<div class="modal-header">
+<button class="close closeLogInModal">×</button>
+<h4 class="text-center">Log In</h4>
+<div id="logInModalFMsg" class="text-center errMsg"></div>
+</div>
+<div class="modal-body">
+<form name="logInModalForm">
+<div class="row">
+<div class="col-sm-12 form-group">
+<label for="logInModalEmail" class="control-label">E-mail</label>
+<input id="logInModalEmail" class="form-control checkField" placeholder="E-mail" autofocus="" type="email">
+<span class="help-block errMsg" id="logInModalEmailErr"></span>
+</div>
+<div class="col-sm-12 form-group">
+<label for="logInPassword" class="control-label">Password</label>
+<input id="logInModalPassword" class="form-control checkField" placeholder="Password" type="password">
+<span class="help-block errMsg" id="logInModalPasswordErr"></span>
+</div>
+</div>
+<div class="row">
+
+<div class="col-sm-4"></div>
+<div class="col-sm-2 pull-right">
+<button id="loginModalSubmit" class="btn btn-primary">Log in</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+    function simulate(page) {
+        $("input[name='page']").attr("value", page)
+        $('#formSearch').submit();
+    }
+
+    function deleteBug(itemId){
+        if(confirm("are you sure you want to delete it?")){
+            /*$.ajax({
+                    type: 'GET',
+                    contentType: 'application/text;charset=utf-8;',
+                    url: 'http://localhost:8080/deleteItem',
+                    data: '{itemId:'+itemId+'}',
+                    dataType: 'text',
+                    success: function (result) {
+                        reload()
+                    }
+                });*/
+
+            $.get(
+            "http://localhost:8080/deleteBug",
+            { "itemId": itemId },
+            function (res) {
+              //reload()
+            });
+            /*
+            $.ajax({
+          url:"http://localhost:8080/deleteItem?itemID="+itemId,
+          type: "get",
+          dataType:"json",
+          success:function(data) {
+                reload()
+            }})*/
+
+        }
+    }
+
+    function submit(){
+        if ($('#BSD') == 'Bug Short Description' || $('#BSD') == '') {
+            alert('Description cannot be none!')
+        }else {
+            $('#add_new_bug').submit();
+            //reload()
+        }
+    }
+
+    $(function(){
+        var num = $('#pageNumber').attr("value")
+        $('#'+num).attr("selected", "selected")
+        var sort = $('#sortNumber').attr("value")
+        $("option[name='"+sort+"']").attr("selected", "selected")
+    })
+    </script>
+    </html>
