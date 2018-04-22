@@ -30,10 +30,10 @@ urlpatterns = [
     url(r'^deleteBug$', view.deleteBug, name='deleteBug'),
     url(r'^customer$', view.customer, name='customer'),
     url(r'^addCustomer$', view.addCustomer, name='addCustomer'),
+	url(r'^mailQueue$', view.mailQueue, name='mailQueue'),
     url(r'^deleteCustomer$', view.deleteCustomer, name='deleteCustomer'),
     url(r'^addItem$', view.addItem, name='addItem'),
     url(r'^deleteItem$', view.deleteItem, name='deleteItem'),
-	url(r'^search$', view.search, name='search'),
     url(r'^addTransaction$', view.addTransaction, name='addTransaction'),
     url(r'^deleteTransaction$', view.deleteTransaction, name='deleteTransaction'),
     url(r'^transaction$', view.transaction, name='transaction'),
@@ -44,5 +44,4 @@ urlpatterns = [
     url(r'^login/$', view.login_view, name='login'),
     url(r'^logout/$', view.logout_view, name='logout'),
     url(r'^admin/', admin.site.urls),
-	
 ]
