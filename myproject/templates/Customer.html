@@ -186,14 +186,6 @@ Dashboard
 Transactions
 </a>
 </li>
-
-<li class="">
-<a href="{%url 'search'%}">
-
-Search Items
-</a>
-</li>
-
 <li class="">
 <a href="{%url 'items'%}">
 
@@ -264,6 +256,7 @@ Report Bugs
 </div>-->
     <a id="Regist_start_" class="btn btn-success" style="width:160px;height:40px;border-radius: 0;">Add New Customer</a>
 </div>
+
     <input hidden id="pageNumber" value="{{ limit }}">
     <input hidden id="sortNumber" value="{{ sortNumber }}">
     <form id="formSearch" action="/customer" method="get">
@@ -405,6 +398,18 @@ Report Bugs
             </div>
     <!--- panel end-->
 </div>
+<a button id="mailQueue()"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden ="true" style="width:200px;height:40px;border-radius: 0;">Process Newsletter Queue</a>
+
+</div>
+
+<script>
+        $.ajax({
+		url:"mailQueue",
+		sucess: function(response) {
+		}
+	});
+    </script>
+
 
 <!---Pagination div-->
 <div class="col-sm-12 text-center">
