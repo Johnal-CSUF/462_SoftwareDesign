@@ -397,15 +397,17 @@ Report Bugs
         <!-- table div end-->
             </div>
     <!--- panel end-->
+	
 </div>
-<a button id="mailQueue()"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-envelope" aria-hidden ="true" style="width:200px;height:40px;border-radius: 0;">Process Newsletter Queue</a>
+<a onclick="mailQueue()" class="btn btn-success" style="float: right" style="width:220px;height:40px;border-radius: 0;">Process Newsletter Queue</a>
 
 </div>
 
 <script>
         $.ajax({
 		url:"mailQueue",
-		sucess: function(response) {
+		sucess: function(data) {
+		alert("Newsletter has been dispatched!");
 		}
 	});
     </script>
