@@ -139,7 +139,7 @@
 				$("#deleteCustomer").click(function(){
 					$.ajax({
                         url: 'deleteCustomer',
-                        method: 'POST',
+                        method: 'GET',
                         success: function (data) {        
                             alert("Customer has been deleted!")
                         }
@@ -387,7 +387,7 @@ Report Bugs
 
                                         <tr>
                         <input class="curItemId" type="hidden">
-                                            <!--<th class="itemSN">1.</th>--><td><a href="" onclick="deleteCustomer({{ item.id }})">delete</a></td>
+                                            <!--<th class="itemSN">1.</th>--><td><a id="deleteCustomer" class="btn">delete</a></td>
                         <td><span>{{ item.firstName }}</span></td>
                         <td><span>{{ item.lastName }}</span></td>
                         <td class="">
