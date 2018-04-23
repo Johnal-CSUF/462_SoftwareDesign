@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
 import sqlite3
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -398,14 +398,14 @@ def customer(request):
     context = {}
     list = []
     for i in result:
-	    item = {}
-	    item['id'] = i[0]
-	    item['firstName'] = i[1]
-	    item['lastName'] = i[2]
-	    item['phone'] = i[3]
-	    item['email'] = i[4]
-	    item['newsletter'] = i[5]
-	    list.append(item)
+        item = {}
+        item['id'] = i[0]
+        item['firstName'] = i[1]
+        item['lastName'] = i[2]
+        item['phone'] = i[3]
+        item['email'] = i[4]
+        item['newsletter'] = i[5]
+        list.append(item)
     context['items'] = list
     enen = result[0][0]
     context['enen'] = enen
@@ -429,11 +429,10 @@ def addCustomer(request):
     lastName = request.GET.get('lastName', '')
     phone = request.GET.get('phone', '')
     email = request.GET.get('email', '')
-    newsletter = request.GET.get('newsletter', '')
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email, Newsletter)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"', '" + newsletter +"'); "
+    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"'); "
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
@@ -450,6 +449,8 @@ def deleteCustomer(request):
     connection.commit()
     connection.close()
     return customer(request)
+	
+	
 	
 def mailQueue(request):
     newsletter = request.GET.get('newsletter', '')
@@ -469,12 +470,10 @@ def mailQueue(request):
 	    html = """<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="initial-scale=1.0"><meta name="format-detection" content="telephone=no"><title>MOSAICO Responsive Email Designer</title><style type="text/css">
     body{ margin: 0; padding: 0; }
     img{ border: 0px; display: block; }
-
     .socialLinks{ font-size: 6px; }
     .socialLinks a{
       display: inline-block;
     }
-
     .long-text p{ margin: 1em 0px; }
     .long-text p:last-child{ margin-bottom: 0px; }
     .long-text p:first-child{ margin-top: 0px; }
@@ -487,24 +486,19 @@ def mailQueue(request):
       width: 100%;
       background-color: #3f3f3f;
       background-color: #3f3f3f}
-
     /* outlook/office365 add buttons outside not-linked images and safari have 2px margin */
     [o365] button{ margin: 0 !important; }
-
     /* outlook */
     table{ mso-table-rspace: 0pt; mso-table-lspace: 0pt; }
     #outlook a{ padding: 0; }
     img{ outline: none; text-decoration: none; border: none; -ms-interpolation-mode: bicubic; }
     a img{ border: none; }
-
     @media screen and (max-width: 600px) {
       table.vb-container, table.vb-row{
         width: 95% !important;
       }
-
       .mobile-hide{ display: none !important; }
       .mobile-textcenter{ text-align: center !important; }
-
       .mobile-full{
         width: 100% !important;
         max-width: none !important;
@@ -531,9 +525,7 @@ def mailQueue(request):
       text-decoration: underline
     }
     </style></head><body style="margin: 0; padding: 0; background-color: #3f3f3f; color: #919191;" text="#919191" vlink="#cccccc" bgcolor="#3f3f3f" alink="#cccccc"><center>
-
  
-
   <table class="vb-outer" style="background-color: #ffffff;" id="ko_titleBlock_9" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff"><tbody><tr><td class="vb-outer" style="padding-left: 9px; padding-right: 9px; font-size: 0;" valign="top" align="center">
       <!--[if (gte mso 9)|(lte ie 8)]><table align="center" border="0" cellspacing="0" cellpadding="0" width="570"><tr><td align="center" valign="top"><![endif]--><!--
       --><div style="margin: 0 auto; max-width: 570px; -mru-width: 0px;"><table class="vb-row" style="border-collapse: separate; width: 100%; background-color: #0066A8; mso-cellspacing: 0px; border-spacing: 0px; max-width: 570px; -mru-width: 0px;" width="570" cellspacing="0" cellpadding="0" border="0" bgcolor="#0066A8"><tbody><tr><td style="font-size: 0; padding: 0 9px;" valign="top" align="center"><div style="display: inline-block; vertical-align: top; width: 100%; max-width: 552px; -mru-width: 0px;"><!--
@@ -599,11 +591,11 @@ def mailQueue(request):
 
     connection.commit()
     connection.close()
-    return None
+    return customer(request)
 	
-		
 	
-  
+
+	
 """
     def itemslocal():
         page = 0
