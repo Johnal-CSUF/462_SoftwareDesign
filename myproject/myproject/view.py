@@ -423,34 +423,32 @@ def customer(request):
     context['totalPageNumber1'] = totalPage - 3
     return render(request, 'Customer.html', context)
 
-
 def addCustomer(request):
     firstName = request.GET.get('firstName', '')
     lastName = request.GET.get('lastName', '')
     phone = request.GET.get('phone', '')
     email = request.GET.get('email', '')
+    newsletter = request.GET.get('newsletter', '')
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"'); "
+    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email, Newsletter)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"', '" + newsletter + "'); "
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
     return customer(request)
 
 def deleteCustomer(request):
-    itemId = request.GET.get('itemId', '')
+    custid = request.GET.get('CustID', '')
     #request.POST['itemId']
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
     #sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
-    sql_command = "DELETE FROM CUSTOMERS WHERE CustID = " + itemId
+    sql_command = ("DELETE FROM CUSTOMERS WHERE CustID = ?", (custid,)) 
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
     return customer(request)
-	
-	
 	
 def mailQueue(request):
     newsletter = request.GET.get('newsletter', '')
@@ -605,6 +603,5 @@ def mailQueue(request):
         connection = sqlite3.connect('./Parts.db')
         kk = connection.execute("SELECT * FROM PRODUCTS")
         return print(kk)
-
     itemslocal()
 """
