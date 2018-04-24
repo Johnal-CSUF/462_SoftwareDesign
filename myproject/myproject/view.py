@@ -6,7 +6,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-
 dict = {"0":"Description", "1":"ItemNumber", "2":"Price", "3":"Available",
         "4":"Description", "5":"ItemNumber", "6":"Price", "7":"Available"  }
 
@@ -90,6 +89,76 @@ def items(request):
     return render(request, 'Items.html', context)
 
 
+def search(request):
+    if 'page' in request.GET:
+        page = int(request.GET['page'])
+    else:
+        page = 0
+    if 'limit' in request.GET:
+        limit = request.GET['limit']
+    else:
+        limit = "5"
+    if 'sortby' in request.GET:
+        sortby = request.GET['sortby']
+    else:
+        sortby = "0"
+    if 'itemName' in request.GET:
+        itemName = request.GET['itemName']
+    else:
+        itemName = ""
+    connection = sqlite3.connect('./Parts.db')
+    #kk = connection.execute("SELECT * FROM PRODUCTS")
+    #return HttpResponse(kk)
+
+    cursor = connection.cursor()
+    dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
+            "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
+    orderBy = dict[sortby]
+    if sortby in ["0","1","2","3"]:
+        is_asc = "ASC"
+    else:
+        is_asc = "DESC"
+    sql = "SELECT * FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'" + " ORDER BY "+ orderBy + " "+is_asc + " LIMIT " + str(limit) + " OFFSET " + str(page)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    sql1 = "SELECT count(*) FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'"
+    cursor1 = connection.cursor()
+    cursor1.execute(sql1)
+    countNum = cursor1.fetchall()
+    connection.commit()
+    connection.close()
+    totalPage = countNum[0][0]//int(limit) + 1
+    context = {}
+    list = []
+    for i in result:
+        item = {}
+        item['id'] = i[0]
+        item['description'] = i[1]
+        item['price'] = i[2]
+        item['quantity'] = i[3]
+        item['class'] = i[4]
+        item['origin'] = i[5]
+        item['leadTime'] = i[6]
+        list.append(item)
+    context['items'] = list
+    enen = result[0][0]
+    context['enen'] = enen
+    context['kk'] = sql
+    first_index = page * int(limit) + 1
+    last_index = (page+1) *int(limit)
+    context['firstIndex'] = first_index
+    context['lastIndex'] = last_index
+    context['limit'] = limit
+    context['sortNumber'] = sortby
+    pages = []
+    for page in range(totalPage - 1):
+        pages.append(page)
+    context['totalPage'] = pages
+    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber1'] = totalPage - 3
+    return render(request, 'search.html', context)
+
+	
 def transaction(request):
     if 'page' in request.GET:
         page = int(request.GET['page'])
@@ -196,7 +265,16 @@ def deleteItem(request):
     connection.close()
     return None
 
-
+def searchItem(request):
+    itemName = request.GET.get('itemName', '')
+    #request.POST['itemId']
+    connection = sqlite3.connect('./Parts.db')
+    cursor = connection.cursor()
+    sql_command = "SELECT * FROM PRODUCTS WHERE Description = "  + itemName
+    cursor.execute(sql_command)
+    connection.commit()
+    connection.close()
+    return render(request, 'search.html', context)
 
 def addTransaction(request):
     itemName = request.GET.get('itemName', '')
@@ -423,6 +501,7 @@ def customer(request):
     context['totalPageNumber1'] = totalPage - 3
     return render(request, 'Customer.html', context)
 
+
 def addCustomer(request):
     firstName = request.GET.get('firstName', '')
     lastName = request.GET.get('lastName', '')
@@ -432,17 +511,19 @@ def addCustomer(request):
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email, Newsletter)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"', '" + newsletter + "'); "
+    sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email, Newsletter)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"', '" + newsletter +"'); "
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
     return customer(request)
 
 def deleteCustomer(request):
-    custid = request.GET.get('CustID', '')
+    itemId = request.GET.get('itemId', '')
+    #request.POST['itemId']
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "DELETE FROM CUSTOMERS WHERE CustID = " + 'custid'
+    #sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
+    sql_command = "DELETE FROM CUSTOMERS WHERE CustID = " + itemId
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
@@ -588,10 +669,6 @@ def mailQueue(request):
     connection.commit()
     connection.close()
     return customer(request)
-	
-	
-
-	
 """
     def itemslocal():
         page = 0
