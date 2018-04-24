@@ -137,9 +137,11 @@
 	                });
                 })
 				$("#deleteCustomer").click(function(){
+				    //var custid = $(this).attr('itemId');
 					$.ajax({
+					    //method: 'GET',
                         url: 'deleteCustomer',
-                        method: 'GET',
+						//data: 'itemId='+custid
                         success: function (data) {        
                             alert("Customer has been deleted!")
                         }
@@ -387,7 +389,7 @@ Report Bugs
 
                                         <tr>
                         <input class="curItemId" type="hidden">
-                                            <!--<th class="itemSN">1.</th>--><td><a id="deleteCustomer" class="btn">delete</a></td>
+                                            <!--<th class="itemSN">1.</th>--><td><a id="deleteCustomer" class="btn button">delete</a></td>
                         <td><span>{{ item.firstName }}</span></td>
                         <td><span>{{ item.lastName }}</span></td>
                         <td class="">
