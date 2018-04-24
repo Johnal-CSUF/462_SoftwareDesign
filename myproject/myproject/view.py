@@ -440,11 +440,9 @@ def addCustomer(request):
 
 def deleteCustomer(request):
     custid = request.GET.get('CustID', '')
-    #request.POST['itemId']
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    #sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
-    sql_command = ("DELETE FROM CUSTOMERS WHERE CustID = ?", (custid,)) 
+    sql_command = "DELETE FROM CUSTOMERS WHERE CustID = " + 'custid'
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
