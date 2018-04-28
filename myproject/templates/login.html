@@ -3,7 +3,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Inventory management system</title>
 <link rel="stylesheet" href="../static/Items_files/bootstrap.css">
- 
 <script type="text/javascript" src="../static/Items_files/jquery1.js"></script>
 <script type="text/javascript" src="../static/Items_files/bootstrap.js"></script>
 <style type="text/css">
@@ -25,7 +24,8 @@ body{ background:#0066A8 url(../static/Items_files/img/login_bg.png) no-repeat c
 <div class="tit"><h1><font color="white">Inventory management system</font></h1></div>
 <div class="login-wrap">
     {{  info }}
-    <form id="loginForm" action="/login" method="get">
+    <form id="loginForm" action="{% url 'login' %}" method="post">{% csrf_token %}
+	<form id="loginForm" action="{% url 'register' %}" method="post">{% csrf_token %}
   <table width="100%" cellspacing="0" cellpadding="0" border="0">
 
     <tbody><tr>
@@ -41,8 +41,13 @@ body{ background:#0066A8 url(../static/Items_files/img/login_bg.png) no-repeat c
       <td><input name="password" class="login_input login_password" value="12345678" type="password"></td>
     </tr>
     <tr>
-      <td valign="bottom" height="60"><a href="javascript:Login()" class="btn btn-block btn-login">Login</a></td>
+      <td valign="bottom" height="50"><a href="javascript:Login()" class="btn btn-block btn-login">Login</a></td>
     </tr>
+	  <td valign="bottom" height="40"><a href="javascript:Register()" class="btn btn-block btn-login">Register</a></td>
+	<tr>
+		
+	
+	</tr>
    
   </tbody></table>
         </form>
@@ -54,7 +59,9 @@ body{ background:#0066A8 url(../static/Items_files/img/login_bg.png) no-repeat c
     function Login() {
         $('#loginForm').submit();
     }
-
+	function Register() {
+		$('#loginForm').submit();
+	}
 
     </script>
     </html>
