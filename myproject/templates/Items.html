@@ -164,6 +164,7 @@
 <img src="../static/Items_files/inventory.ico" alt="logo" class="img-responsive" width="57px">
 </a>
 </div>
+<h1 align="center" style="color: #2e6da4;"><b>Inventory management system</b></h1>
 <div align="right"><font size="6px"><a href="/logout">logout</a></font></div>
 
 
@@ -175,7 +176,7 @@
 <br>
 <ul class="nav nav-pills nav-stacked pointer">
 <li class="">
-<a href="">
+<a href="/homepage">
 
 Dashboard
 </a>
@@ -235,22 +236,21 @@ Report Bugs
 					<span id="lab_login">New Item Info</span>
 
 				</div>
-                <form id="add_new_item" action="/addItem" method="get">
+                <form id="add_new_item" action="{% url 'addItem' %}" method="post">{% csrf_token %}
 				<div id="form_container2" style="padding-top: 25px;">
 
-					<input class="form-control" placeholder="Item Name" name="itemName" id="itemName" type="text">
+					<input class="form-control" placeholder="Item Name" name="itemName" id="itemName1" type="text">
 					<input class="form-control" placeholder="Quanity In Stock" name="QIS" id="QIS" type="text">
 					<input class="form-control" placeholder="Unit Price" name="unitPrice" id="unitPrice" type="text">
 					<input class="form-control" placeholder="Class" name="class" id="class" type="text">
                     <input class="form-control" style="margin-top:5px;" placeholder="Lead Time" name="leadTime" id="leadTime" type="text">
                     <input class="form-control" style="margin-top:5px;" placeholder="Origin" name="origin" id="origin" type="text">
-
-					<!--<button id="getVCode" type="button" class="btn btn-success" >获取验证码</button>-->
-					<!--<input id="getVCode" class="btn btn-success" value="点击发送验证码" onclick="sendCode(this)" type="button">-->
-
 				</div>
                 </form>
-                <a href="" onclick="submit();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+					 <input onclick="submit()" value="submit" class="btn btn-success" id="submit" type="button">
+				<!--
+                <a href="" onclick="submit()"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+				-->
 			</div>
 		</div>
 <div class="row">
@@ -298,7 +298,7 @@ Report Bugs
 </div>
 <div class="col-sm-3 form-inline form-group-sm">
  <label for="itemName"><i ></i></label>
-<input id="itemName" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search">
+<input id="itemName3" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search">
 </div>
 </form>
 </div>
@@ -328,7 +328,7 @@ Report Bugs
 <div class="row">
 <div class="col-sm-12 form-group-sm">
 <label for="itemName">Item Name</label>
-<input id="itemName" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
+<input id="itemName3" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
 <span class="help-block errMsg" id="itemNameErr"></span>
 </div>
 </div>
@@ -399,7 +399,8 @@ Report Bugs
 
                                         <tr>
                         <input class="curItemId" type="hidden">
-                                            <!--<th class="itemSN">1.</th>--><td><a href="" onclick="deleteItem({{ item.id }})">delete</a></td>
+                                            <!--<th class="itemSN">1.</th>	{% url 'addItem' %} -->
+											<td><a href="" onclick="deleteItem({{ item.id }})">delete</a></td>
                         <td><span>{{ item.description }}</span></td>
                         <td><span>{{ item.id }}</span></td>
                         <td class="">
@@ -588,7 +589,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
             alert('origin cannot be none!')
         }else {
             $('#add_new_item').submit();
-            //reload()
+            //reload() add_new_item
         }
     }
 

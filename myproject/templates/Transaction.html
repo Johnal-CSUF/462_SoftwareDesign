@@ -164,6 +164,7 @@
 <img src="../static/Items_files/inventory.ico" alt="logo" class="img-responsive" width="57px">
 </a>
 </div>
+<h1 align="center" style="color: #2e6da4;"><b>Inventory management system</b></h1>
 <div align="right"><font size="12px"><a href="/logout">logout</a></font></div>
 
 
@@ -174,8 +175,9 @@
 <div class="col-sm-2 sidenav hidden-xs mySideNav">
 <br>
 <ul class="nav nav-pills nav-stacked pointer">
+
 <li class="">
-<a href="">
+<a href="/homepage">
 
 Dashboard
 </a>
@@ -235,7 +237,7 @@ Report Bugs
 					<span id="lab_login">New Transaction Info</span>
 
 				</div>
-                <form id="add_new_Transaction" action="/addTransaction" method="get" style="height:480px">
+                <form id="add_new_Transaction" action="{% url 'addTransaction' %}" method="get" style="height:480px">
 				<div id="form_container2" style="padding-top: 25px;">
 
 					<input class="form-control" placeholder="Item Name" name="itemName" id="itemName" type="text">

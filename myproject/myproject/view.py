@@ -35,7 +35,6 @@ def items(request):
     connection = sqlite3.connect('./Parts.db')
     #kk = connection.execute("SELECT * FROM PRODUCTS")
     #return HttpResponse(kk)
-
     cursor = connection.cursor()
     dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
             "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
@@ -154,7 +153,7 @@ def search(request):
     context['totalPageNumber1'] = totalPage - 3
     return render(request, 'search.html', context)
 
-	
+
 def transaction(request):
     if 'page' in request.GET:
         page = int(request.GET['page'])
@@ -234,20 +233,91 @@ def transaction(request):
 import numpy as np
 
 def addItem(request):
-    itemName = request.GET.get('itemName', '')
-    qis = request.GET.get('QIS', '')
-    unitPrice = request.GET.get('unitPrice', '')
-    class1 = request.GET.get('class', '')
-    leadTime = request.GET.get('leadTime', '')
-    origin = request.GET.get('origin', '')
+    print ('hello from addItem')
+    itemName = request.POST.get('itemName', '')
+    qis = request.POST.get('QIS', '')
+    unitPrice = request.POST.get('unitPrice', '')
+    class1 = request.POST.get('class', '')
+    leadTime = request.POST.get('leadTime', '')
+    origin = request.POST.get('origin', '')
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
+    sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', '" + str(unitPrice) +"', '" + str(qis) + "', '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
+    #print ('itemId '+str(itemId))
+    #print ('itemName ' + itemName)
+
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    return None
+
+    if 'page' in request.GET:
+        page = int(request.GET['page'])
+    else:
+        page = 0
+    if 'limit' in request.GET:
+        limit = request.GET['limit']
+    else:
+        limit = "5"
+    if 'sortby' in request.GET:
+        sortby = request.GET['sortby']
+    else:
+        sortby = "0"
+    if 'itemName' in request.GET:
+        itemName = request.GET['itemName']
+    else:
+        itemName = ""
+    connection = sqlite3.connect('./Parts.db')
+    #kk = connection.execute("SELECT * FROM PRODUCTS")
+    #return HttpResponse(kk)
+    cursor = connection.cursor()
+    dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
+            "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
+    orderBy = dict[sortby]
+    if sortby in ["0","1","2","3"]:
+        is_asc = "ASC"
+    else:
+        is_asc = "DESC"
+    sql = "SELECT * FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'" + " ORDER BY "+ orderBy + " "+is_asc + " LIMIT " + str(limit) + " OFFSET " + str(page)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    sql1 = "SELECT count(*) FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'"
+    cursor1 = connection.cursor()
+    cursor1.execute(sql1)
+    countNum = cursor1.fetchall()
+    connection.commit()
+    connection.close()
+    totalPage = countNum[0][0]//int(limit) + 1
+    context = {}
+    list = []
+    for i in result:
+        item = {}
+        item['id'] = i[0]
+        item['description'] = i[1]
+        item['price'] = i[2]
+        item['quantity'] = i[3]
+        item['class'] = i[4]
+        item['origin'] = i[5]
+        item['leadTime'] = i[6]
+        list.append(item)
+    context['items'] = list
+    enen = result[0][0]
+    context['enen'] = enen
+    context['kk'] = sql
+    first_index = page * int(limit) + 1
+    last_index = (page+1) *int(limit)
+    context['firstIndex'] = first_index
+    context['lastIndex'] = last_index
+    context['limit'] = limit
+    context['sortNumber'] = sortby
+    pages = []
+    for page in range(totalPage - 1):
+        pages.append(page)
+    context['totalPage'] = pages
+    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber1'] = totalPage - 3
+
+    return render(request, 'Items.html', context)
 
 def deleteItem(request):
     itemId = request.GET.get('itemId', '')
@@ -255,7 +325,7 @@ def deleteItem(request):
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
     #sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
-    sql_command = "DELETE FROM PRODUCTS WHERE ItemNumber = " + itemId
+    sql_command = "DELETE FROM PRODUCTS WHERE ItemNumber = " +  str(itemId)
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
@@ -296,12 +366,13 @@ def addTransaction(request):
     return transaction(request)
 
 def deleteTransaction(request):
+    print ('delete')
+    print (str(itemId))
     itemId = request.GET.get('itemId', '')
     #request.POST['itemId']
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    #sql_command = "INSERT OR REPLACE INTO PRODUCTS (ItemNumber, Description, Price, Available, Class, Origin, Lead_Time)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', " + str(unitPrice) +", " + str(qis) + ", '" + class1 + "', '"+ origin + "', '" + leadTime + "'); "
-    sql_command = "DELETE FROM TRANSACTIONSS WHERE ORDERNUMBER = " + itemId
+    sql_command = "DELETE FROM TRANSACTIONSS WHERE ORDERNUMBER = " + str(itemId)
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
@@ -330,21 +401,40 @@ def name(username, password):
     connection.close()
     return result
 
+def register(request,first=False):
+  username = request.POST.get('username', '')
+  password = request.POST.get('password', '')
+  connection = sqlite3.connect('./Parts.db')
+  cursor = connection.cursor()
+  sql = "SELECT COUNT (*) FROM ACCOUNT"
+  cursor.execute(sql)
+  rowcount = cursor.fetchone()[0]
+  print(rowcount)
+  connection.close()
+  return render(request, 'homepage.html', context)
+
+usernameG = "User"
+usernameGlobal = {}
 def login_view(request,first=False):
-  username = request.GET.get('username', '')
-  password = request.GET.get('password', '')
+  username = request.POST.get('username', '')
+  password = request.POST.get('password', '')
   #if username == 'lizenan' and password == 'lizenan':
     #  user = 1
   #else:
       #user = 0
   user = verify(username, password)
   context = {}
-
+  global usernameG 
+  usernameG = username
   if user == 1:
     name1 = name(username, password)
     context['user'] = name1[0][3]
+    global usernameGlobal
+    usernameGlobal['user'] = name1[0][3]
     # Correct password, and the user is marked "active"
     # Redirect to a success page.
+    print ('homeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    print (context)
     return render(request, 'homepage.html', context)#("/account/loggedin/")
   else:
     # Show an error page
@@ -359,6 +449,11 @@ def logout_view(request):
     context = {}
   # Redirect to a success page.
     return render(request, 'logout.html', context)#HttpResponseRedirect("/account/loggedout/")
+
+def homepage(request):
+    print ('hommmmmmmmmmmmmmmmmmmmeeeeeee')
+    print (usernameGlobal)
+    return render(request, 'homepage.html', usernameGlobal)
 
 def home(request):
   # Redirect to a success page.
@@ -421,10 +516,10 @@ def bugs(request):
 import datetime
 
 def addBug(request):
-    BSD = request.GET.get('BSD', '')
+    BSD = request.POST.get('BSD', '')
     itemId = np.random.randint(999999)
     reportDate =  datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    enteredBy = 'zenanLi'
+    enteredBy = usernameG
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
     sql_command = "INSERT OR REPLACE INTO BUGS (report_id, report_desc, report_date, entered_by)" + " VALUES ('" + str(itemId) +"', '" + BSD + "', '" + reportDate +"', '" + enteredBy +  "'); "
@@ -498,10 +593,10 @@ def customer(request):
 
 
 def addCustomer(request):
-    firstName = request.GET.get('firstName', '')
-    lastName = request.GET.get('lastName', '')
-    phone = request.GET.get('phone', '')
-    email = request.GET.get('email', '')
+    firstName = request.POST.get('firstName', '')
+    lastName = request.POST.get('lastName', '')
+    phone = request.POST.get('phone', '')
+    email = request.POST.get('email', '')
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
