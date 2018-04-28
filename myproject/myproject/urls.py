@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^deleteCustomer$', view.deleteCustomer, name='deleteCustomer'),
     url(r'^addItem$', view.addItem, name='addItem'),
     url(r'^deleteItem$', view.deleteItem, name='deleteItem'),
+    url(r'^mailQueue$', view.mailQueue, name='mailQueue'),
 	url(r'^search$', view.search, name='search'),
     url(r'^addTransaction$', view.addTransaction, name='addTransaction'),
     url(r'^deleteTransaction$', view.deleteTransaction, name='deleteTransaction'),

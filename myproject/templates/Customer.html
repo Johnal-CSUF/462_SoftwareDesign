@@ -134,6 +134,15 @@
 					$("#regist_container").hide(500);
 					$("#login_container").show(500);
 				});
+				$("#MailQueue").click(function(){
+					$.ajax({
+                        url: 'mailQueue',
+                        method: 'GET',
+                        success: function (data) {        
+                            alert("Newsletter queue has been processed!")
+                        }
+	                });
+				});
 			});
 		</script>
 <link rel="stylesheet" href="../static/Items_files/bootstrap-theme.css">
@@ -243,6 +252,7 @@ Report Bugs
 					<input class="form-control" placeholder="Last Name" name="lastName" id="lastName" type="text">
 					<input class="form-control" placeholder="Phone" name="phone" id="phone" type="text">
 					<input class="form-control" placeholder="Email" name="email" id="email" type="text">
+					<input class="form-control" placeholder="Newsletter" name="newsletter" id="newsletter" type="text"> 
 
 
 					<!--<button id="getVCode" type="button" class="btn btn-success" >获取验证码</button>-->
@@ -375,6 +385,7 @@ Report Bugs
                         <th>Customer ID</th>
                         <th>Phone</th>
                         <th>Email</th>
+						<th>Newsletter</th>
 
 
                     </tr>
@@ -392,7 +403,7 @@ Report Bugs
                         </td>
                         <td><span>{{ item.phone }} </span></td>
                         <td>{{ item.email }}</td>
-
+						<td>{{ item.newsletter }}</td>
                         <!--<td class="text-center text-primary">
                             <span class="editItem" id="edit-374"><i class="fa fa-pencil pointer"></i> </span>
                         </td>
@@ -406,6 +417,11 @@ Report Bugs
             </div>
     <!--- panel end-->
 </div>
+
+<div>
+<a id= "MailQueue" class="btn btn-success" style="float: right" style="width:160px;height:40px;border-radius: 0;">Process Newsletter Queue</a>
+</div>
+
 
 <!---Pagination div-->
 <div class="col-sm-12 text-center">
