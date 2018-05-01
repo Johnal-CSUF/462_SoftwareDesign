@@ -239,7 +239,7 @@ Report Bugs
                 <form id="add_new_item" action="{% url 'addItem' %}" method="post">{% csrf_token %}
 				<div id="form_container2" style="padding-top: 25px;">
 
-					<input class="form-control" placeholder="Item Name" name="itemName" id="itemName1" type="text">
+					<input class="form-control" placeholder="Item Name" name="itemName" id="itemName" type="text">
 					<input class="form-control" placeholder="Quanity In Stock" name="QIS" id="QIS" type="text">
 					<input class="form-control" placeholder="Unit Price" name="unitPrice" id="unitPrice" type="text">
 					<input class="form-control" placeholder="Class" name="class" id="class" type="text">
@@ -247,10 +247,7 @@ Report Bugs
                     <input class="form-control" style="margin-top:5px;" placeholder="Origin" name="origin" id="origin" type="text">
 				</div>
                 </form>
-					 <input onclick="submit()" value="submit" class="btn btn-success" id="submit" type="button">
-				<!--
-                <a href="" onclick="submit()"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
-				-->
+                <a href="" onclick="submit_form();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
 			</div>
 		</div>
 <div class="row">
@@ -298,7 +295,7 @@ Report Bugs
 </div>
 <div class="col-sm-3 form-inline form-group-sm">
  <label for="itemName"><i ></i></label>
-<input id="itemName3" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search">
+<!--<input id="itemName" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search"> -->
 </div>
 </form>
 </div>
@@ -328,7 +325,7 @@ Report Bugs
 <div class="row">
 <div class="col-sm-12 form-group-sm">
 <label for="itemName">Item Name</label>
-<input id="itemName3" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
+<input id="itemName" name="itemName" placeholder="Item Name" maxlength="80" class="form-control" onchange="checkField(this.value, 'itemNameErr')" type="text">
 <span class="help-block errMsg" id="itemNameErr"></span>
 </div>
 </div>
@@ -399,8 +396,7 @@ Report Bugs
 
                                         <tr>
                         <input class="curItemId" type="hidden">
-                                            <!--<th class="itemSN">1.</th>	{% url 'addItem' %} -->
-											<td><a href="" onclick="deleteItem({{ item.id }})">delete</a></td>
+                                            <!--<th class="itemSN">1.</th>--><td><a href="" onclick="deleteItem({{ item.id }})">delete</a></td>
                         <td><span>{{ item.description }}</span></td>
                         <td><span>{{ item.id }}</span></td>
                         <td class="">
@@ -427,27 +423,7 @@ Report Bugs
 </div>
 
 <!---Pagination div-->
-<div class="col-sm-12 text-center">
-    <ul class="pagination">
-        {% for i in totalPage %}
-        {% if i < 3 %}
-            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{i}}</b></a></li></ul>
-        {% endif %}
-        {% if i == 3 %}
-            <ul class="pagination"><li><a>...</a></li></ul>
-        {% endif %}
-        {% if totalPageNumber >= i and totalPageNumber1 < i %}
-            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{ i }}</b></a></li></ul>
-        {% endif %}
-    {% endfor %}
-            <!--<a href="" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li>
-            <a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
-        </ul>    </ul>-->
-</div></div>
+{% include "page.html" %}
 </div>
 
 </div>
@@ -574,7 +550,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
         }
     }
 
-    function submit(){
+    function submit_form(){
         if ($('#itemName') == 'Item Name' || $('#itemName') == '') {
             alert('Item Name cannot be none!')
         }else if ($('#QIS') == 'Quanity In Stock' || $('#QIS') == ''){
@@ -589,7 +565,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
             alert('origin cannot be none!')
         }else {
             $('#add_new_item').submit();
-            //reload() add_new_item
+            //reload()
         }
     }
 

@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^deleteItem$', view.deleteItem, name='deleteItem'),
     url(r'^mailQueue$', view.mailQueue, name='mailQueue'),
 	url(r'^search$', view.search, name='search'),
+    url(r'^notfound$', view.search, name='notfound'),
     url(r'^addTransaction$', view.addTransaction, name='addTransaction'),
     url(r'^deleteTransaction$', view.deleteTransaction, name='deleteTransaction'),
     url(r'^transaction$', view.transaction, name='transaction'),

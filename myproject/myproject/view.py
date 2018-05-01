@@ -21,7 +21,7 @@ def hello(request):
 
 def items(request):
     if 'page' in request.GET:
-        page = int(request.GET['page'])
+        page = int(request.GET['page']) - 1
     else:
         page = 0
     if 'limit' in request.GET:
@@ -39,6 +39,7 @@ def items(request):
     connection = sqlite3.connect('./Parts.db')
     #kk = connection.execute("SELECT * FROM PRODUCTS")
     #return HttpResponse(kk)
+
     cursor = connection.cursor()
     dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
             "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
@@ -59,18 +60,24 @@ def items(request):
     totalPage = countNum[0][0]//int(limit) + 1
     context = {}
     list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['description'] = i[1]
-        item['price'] = i[2]
-        item['quantity'] = i[3]
-        item['class'] = i[4]
-        item['origin'] = i[5]
-        item['leadTime'] = i[6]
-        list.append(item)
+    try:
+        for i in result:
+            item = {}
+            item['id'] = i[0]
+            item['description'] = i[1]
+            item['price'] = i[2]
+            item['quantity'] = i[3]
+            item['class'] = i[4]
+            item['origin'] = i[5]
+            item['leadTime'] = i[6]
+            list.append(item)
+    except:
+        list = list
     context['items'] = list
-    enen = result[0][0]
+    try:
+        enen = result[0][0]
+    except:
+        enen = 0
     context['enen'] = enen
     context['kk'] = sql
     first_index = page * int(limit) + 1
@@ -80,17 +87,18 @@ def items(request):
     context['limit'] = limit
     context['sortNumber'] = sortby
     pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
+    # for page in range(totalPage - 1):
+    # pages.append(page)
     context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber'] = totalPage
     context['totalPageNumber1'] = totalPage - 3
+    context['currentPage'] = page
+    context['nextPage'] = page + 2
+    context['lastPage'] = totalPage - 1
     return render(request, 'Items.html', context)
-
-
 def search(request):
     if 'page' in request.GET:
-        page = int(request.GET['page'])
+        page = int(request.GET['page']) -1 
     else:
         page = 0
     if 'limit' in request.GET:
@@ -106,9 +114,6 @@ def search(request):
     else:
         itemName = ""
     connection = sqlite3.connect('./Parts.db')
-    #kk = connection.execute("SELECT * FROM PRODUCTS")
-    #return HttpResponse(kk)
-
     cursor = connection.cursor()
     dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
             "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
@@ -124,23 +129,42 @@ def search(request):
     cursor1 = connection.cursor()
     cursor1.execute(sql1)
     countNum = cursor1.fetchall()
+    #if countNum==[(0,)]:
+     #   itemName = ""
+      #  sql = "SELECT * FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'" + " ORDER BY "+ orderBy + " "+is_asc + " LIMIT " + str(limit) + " OFFSET " + str(page)
+       # cursor.execute(sql)
+       # result = cursor.fetchall()
+       # sql1 = "SELECT count(*) FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'"
+        #cursor1 = connection.cursor()
+        #cursor1.execute(sql1)
+        #countNum = cursor1.fetchall()
+        #connection.commit()
+        #connection.close()
+        #context = {}
+        #return render(request, 'search.html', context)
     connection.commit()
     connection.close()
     totalPage = countNum[0][0]//int(limit) + 1
     context = {}
-    list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['description'] = i[1]
-        item['price'] = i[2]
-        item['quantity'] = i[3]
-        item['class'] = i[4]
-        item['origin'] = i[5]
-        item['leadTime'] = i[6]
-        list.append(item)
+    list = [] 
+    try:
+        for i in result:
+            item = {}
+            item['id'] = i[0]
+            item['description'] = i[1]
+            item['price'] = i[2]
+            item['quantity'] = i[3]
+            item['class'] = i[4]
+            item['origin'] = i[5]
+            item['leadTime'] = i[6]
+            list.append(item)
+    except:
+        list = list
     context['items'] = list
-    enen = result[0][0]
+    try:
+        enen = result[0][0]
+    except:
+        enen = 0
     context['enen'] = enen
     context['kk'] = sql
     first_index = page * int(limit) + 1
@@ -150,11 +174,14 @@ def search(request):
     context['limit'] = limit
     context['sortNumber'] = sortby
     pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
+    # for page in range(totalPage - 1):
+    # pages.append(page)
     context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber'] = totalPage
     context['totalPageNumber1'] = totalPage - 3
+    context['currentPage'] = page
+    context['nextPage'] = page + 2
+    context['lastPage'] = totalPage - 1
     return render(request, 'search.html', context)
 
 
@@ -199,25 +226,31 @@ def transaction(request):
     totalPage = countNum[0][0]//int(limit) + 1
     context = {}
     list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['quantity'] = i[1]
-        item['price'] = i[2]
-        item['pay'] = i[4]
-        item['orderdate'] = i[5]
-        item['status'] = i[6]
-        item['product'] = i[10]
-        item['customerName'] = i[13]
-        item['phone'] = i[14]
-        item['address'] = i[15]
-        item['city'] = i[17]
-        item['state'] = i[18]
-        item['country'] = i[20]
-        item['dealSize'] = i[24]
-        list.append(item)
+    try:
+        for i in result:
+            item = {}
+            item['id'] = i[0]
+            item['quantity'] = i[1]
+            item['price'] = i[2]
+            item['pay'] = i[4]
+            item['orderdate'] = i[5]
+            item['status'] = i[6]
+            item['product'] = i[10]
+            item['customerName'] = i[13]
+            item['phone'] = i[14]
+            item['address'] = i[15]
+            item['city'] = i[17]
+            item['state'] = i[18]
+            item['country'] = i[20]
+            item['dealSize'] = i[24]
+            list.append(item)
+    except:
+        list = list
     context['items'] = list
-    enen = result[0][0]
+    try:
+        enen = result[0][0]
+    except:
+        enen = 0
     context['enen'] = enen
     context['kk'] = sql
     first_index = page * int(limit) + 1
@@ -227,11 +260,14 @@ def transaction(request):
     context['limit'] = limit
     context['sortNumber'] = sortby
     pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
+    #for page in range(totalPage - 1):
+        #pages.append(page)
     context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber'] = totalPage
     context['totalPageNumber1'] = totalPage - 3
+    context['currentPage'] = page
+    context['nextPage'] = page + 2
+    context['lastPage'] = totalPage-1
     return render(request, 'Transaction.html', context)
 
 import numpy as np
@@ -254,72 +290,7 @@ def addItem(request):
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-
-    if 'page' in request.GET:
-        page = int(request.GET['page'])
-    else:
-        page = 0
-    if 'limit' in request.GET:
-        limit = request.GET['limit']
-    else:
-        limit = "5"
-    if 'sortby' in request.GET:
-        sortby = request.GET['sortby']
-    else:
-        sortby = "0"
-    if 'itemName' in request.GET:
-        itemName = request.GET['itemName']
-    else:
-        itemName = ""
-    connection = sqlite3.connect('./Parts.db')
-    #kk = connection.execute("SELECT * FROM PRODUCTS")
-    #return HttpResponse(kk)
-    cursor = connection.cursor()
-    dict = {"0": "Description", "1": "ItemNumber", "2": "Price", "3": "Available",
-            "4": "Description", "5": "ItemNumber", "6": "Price", "7": "Available"}
-    orderBy = dict[sortby]
-    if sortby in ["0","1","2","3"]:
-        is_asc = "ASC"
-    else:
-        is_asc = "DESC"
-    sql = "SELECT * FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'" + " ORDER BY "+ orderBy + " "+is_asc + " LIMIT " + str(limit) + " OFFSET " + str(page)
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    sql1 = "SELECT count(*) FROM PRODUCTS WHERE DESCRIPTION LIKE "+ "'" + str(itemName) + "%'"
-    cursor1 = connection.cursor()
-    cursor1.execute(sql1)
-    countNum = cursor1.fetchall()
-    connection.commit()
-    connection.close()
-    totalPage = countNum[0][0]//int(limit) + 1
-    context = {}
-    list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['description'] = i[1]
-        item['price'] = i[2]
-        item['quantity'] = i[3]
-        item['class'] = i[4]
-        item['origin'] = i[5]
-        item['leadTime'] = i[6]
-        list.append(item)
-    context['items'] = list
-    enen = result[0][0]
-    context['enen'] = enen
-    context['kk'] = sql
-    first_index = page * int(limit) + 1
-    last_index = (page+1) *int(limit)
-    context['firstIndex'] = first_index
-    context['lastIndex'] = last_index
-    context['limit'] = limit
-    context['sortNumber'] = sortby
-    pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
-    context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
-    context['totalPageNumber1'] = totalPage - 3
+    return items
 
     return render(request, 'Items.html', context)
 
@@ -333,7 +304,7 @@ def deleteItem(request):
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
-    return None
+    return items
 
 def searchItem(request):
     itemName = request.GET.get('itemName', '')
@@ -364,7 +335,7 @@ def addTransaction(request):
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    sql_command = "INSERT OR REPLACE INTO TRANSACTIONSS (ORDERNUMBER, PRODUCTLINE, QUANTITYORDERED, PRICEEACH, SALES, ORDERDATE, STATUS, CUSTOMERNAME, PHONE, ADDRESSLINE1, CITY, STATE, COUNTRY, DEALSIZE)" + " VALUES ('" + itemId +"', '" + itemName + "', '" + qoo +"', '" + unitPrice + "', '" + pay + "', '"+ orderDate + "', '" + status + "' , '" + customerName + "', '" + phone + "', '"+ address + "', '"+ city + "', '"+ state + "', '" + country + "', '"+ dealSize + "'); "
+    sql_command = "INSERT OR REPLACE INTO TRANSACTIONSS (ORDERNUMBER, PRODUCTLINE, QUANTITYORDERED, PRICEEACH, SALES, ORDERDATE, STATUS, CUSTOMERNAME, PHONE, ADDRESSLINE1, CITY, STATE, COUNTRY, DEALSIZE)" + " VALUES ('" + str(itemId) +"', '" + itemName + "', '" + qoo +"', '" + str(unitPrice) + "', '" + str(pay) + "', '"+ orderDate + "', '" + status + "' , '" + customerName + "', '" + str(phone) + "', '"+ address + "', '"+ city + "', '"+ state + "', '" + country + "', '"+ dealSize + "'); "
     cursor.execute(sql_command)
     connection.commit()
     connection.close()
@@ -438,8 +409,6 @@ def login_view(request,first=False):
     usernameGlobal['user'] = name1[0][3]
     # Correct password, and the user is marked "active"
     # Redirect to a success page.
-    print ('homeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-    print (context)
     return render(request, 'homepage.html', context)#("/account/loggedin/")
   else:
     # Show an error page
@@ -467,7 +436,7 @@ def home(request):
 
 def bugs(request):
     if 'page' in request.GET:
-        page = int(request.GET['page'])
+        page = int(request.GET['page']) -1
     else:
         page = 0
     if 'limit' in request.GET:
@@ -491,18 +460,24 @@ def bugs(request):
     totalPage = countNum[0][0]//int(limit) + 1
     context = {}
     list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['description'] = i[1]
-        item['reportDate'] = i[2]
-        item['recorder'] = i[3]
-        item['solution'] = i[4]
-        item['fixer'] = i[5]
-        item['fixedTime'] = i[6]
-        list.append(item)
+    try:
+        for i in result:
+            item = {}
+            item['id'] = i[0]
+            item['description'] = i[1]
+            item['reportDate'] = i[2]
+            item['recorder'] = i[3]
+            item['solution'] = i[4]
+            item['fixer'] = i[5]
+            item['fixedTime'] = i[6]
+            list.append(item)
+    except:
+        list = list
     context['items'] = list
-    enen = result[0][0]
+    try:
+        enen = result[0][0]
+    except:
+        enen = 0
     context['enen'] = enen
     context['kk'] = sql
     first_index = page * int(limit) + 1
@@ -511,11 +486,14 @@ def bugs(request):
     context['lastIndex'] = last_index
     context['limit'] = limit
     pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
+    # for page in range(totalPage - 1):
+    # pages.append(page)
     context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber'] = totalPage
     context['totalPageNumber1'] = totalPage - 3
+    context['currentPage'] = page
+    context['nextPage'] = page + 2
+    context['lastPage'] = totalPage - 1
     return render(request, 'Bugs.html', context)
 
 import datetime
@@ -547,7 +525,7 @@ def deleteBug(request):
 
 def customer(request):
     if 'page' in request.GET:
-        page = int(request.GET['page'])
+        page = int(request.GET['page']) - 1
     else:
         page = 0
     if 'limit' in request.GET:
@@ -571,17 +549,23 @@ def customer(request):
     totalPage = countNum[0][0]//int(limit) + 1
     context = {}
     list = []
-    for i in result:
-        item = {}
-        item['id'] = i[0]
-        item['firstName'] = i[1]
-        item['lastName'] = i[2]
-        item['phone'] = i[3]
-        item['email'] = i[4]
-        item['newsletter'] = i[5] 
-        list.append(item)
+    try:
+        for i in result:
+            item = {}
+            item['id'] = i[0]
+            item['firstName'] = i[1]
+            item['lastName'] = i[2]
+            item['phone'] = i[3]
+            item['email'] = i[4]
+            item['newsletter'] = i[5] 
+            list.append(item)
+    except:
+        list = list
     context['items'] = list
-    enen = result[0][0]
+    try:
+        enen = result[0][0]
+    except:
+        enen = 0
     context['enen'] = enen
     context['kk'] = sql
     first_index = page * int(limit) + 1
@@ -590,24 +574,27 @@ def customer(request):
     context['lastIndex'] = last_index
     context['limit'] = limit
     pages = []
-    for page in range(totalPage - 1):
-        pages.append(page)
+    # for page in range(totalPage - 1):
+    # pages.append(page)
     context['totalPage'] = pages
-    context['totalPageNumber'] = totalPage - 2
+    context['totalPageNumber'] = totalPage
     context['totalPageNumber1'] = totalPage - 3
+    context['currentPage'] = page
+    context['nextPage'] = page + 2
+    context['lastPage'] = totalPage - 1
     return render(request, 'Customer.html', context)
 
 
 def addCustomer(request):
-    firstName = request.POST.get('firstName', '')
-    lastName = request.POST.get('lastName', '')
-    phone = request.POST.get('phone', '')
-    email = request.POST.get('email', '')
+    print ('ADD Customer')
+    firstName = request.GET.get('firstName', '')
+    lastName = request.GET.get('lastName', '')
+    phone = request.GET.get('phone', '')
+    email = request.GET.get('email', '')
     newsletter = request.GET.get('newsletter', '') 
     itemId = np.random.randint(999999)
     connection = sqlite3.connect('./Parts.db')
     cursor = connection.cursor()
-    #sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"'); "
     sql_command = "INSERT OR REPLACE INTO CUSTOMERS (CustID, Fname, Lname, Phone, Email, Newsletter)" + " VALUES ('" + str(itemId) +"', '" + firstName + "', '" + lastName +"', '" + phone + "', '" + email +"', '" + newsletter +"'); "
     cursor.execute(sql_command)
     connection.commit()

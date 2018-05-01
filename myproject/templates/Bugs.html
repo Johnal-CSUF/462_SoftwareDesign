@@ -246,7 +246,7 @@ Report Bugs
 
 				</div>
                 </form>
-                <a href="" onclick="submit();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+                <a href="" onclick="submit_form();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
 			</div>
 		</div>
 <div class="row">
@@ -406,27 +406,7 @@ Report Bugs
 </div>
 
 <!---Pagination div-->
-<div class="col-sm-12 text-center">
-    <ul class="pagination">
-        {% for i in totalPage %}
-        {% if i < 3 %}
-            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{i}}</b></a></li></ul>
-        {% endif %}
-        {% if i == 3 %}
-            <ul class="pagination"><li><a>...</a></li></ul>
-        {% endif %}
-        {% if totalPageNumber >= i and totalPageNumber1 < i %}
-            <ul class="pagination"><li><a onclick="simulate({{i}})"><b style="color:black">{{ i }}</b></a></li></ul>
-        {% endif %}
-    {% endfor %}
-            <!--<a href="" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li>
-            <a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li>
-            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
-        </ul>    </ul>-->
-</div></div>
+{% include "page.html" %}
 </div>
 
 </div>
@@ -553,7 +533,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
         }
     }
 
-    function submit(){
+    function submit_form(){
         if ($('#BSD') == 'Bug Short Description' || $('#BSD') == '') {
             alert('Description cannot be none!')
         }else {

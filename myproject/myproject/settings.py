@@ -54,7 +54,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ 'C:\\Users\\Kavit\\Desktop\\CSUF\\Spring 2018\\CS 462\\myproject\\templates'],
+        'DIRS': [ 'C:\\Users\\Kavit\\Desktop\\462_SoftwareDesign-master\\myproject\\templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

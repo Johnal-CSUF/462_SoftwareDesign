@@ -260,7 +260,7 @@ Report Bugs
 
 				</div>
                 </form>
-                <a href="" onclick="submit();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+                <a href="" onclick="submit_form();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
 			</div>
 		</div>
 <div class="row">
@@ -275,7 +275,7 @@ Report Bugs
     <input hidden id="pageNumber" value="{{ limit }}">
     <input hidden id="sortNumber" value="{{ sortNumber }}">
     <form id="formSearch" action="/transaction" method="get">
-<div class="col-sm-3 form-inline form-group-sm">
+<div class="col-sm-3 form-inline form-group-sm" style="width:auto">
 <label for="limit">Show</label>
 <select id="limit" onchange="simulate(0)" name="limit" class="form-control">
 <option id="1" value="1">1</option>
@@ -290,7 +290,7 @@ Report Bugs
 </select><input hidden name="page" value="0">
 <label>per page</label>
 </div>
-<div class="col-sm-4 form-group-sm form-inline">
+<div class="col-sm-4 form-group-sm form-inline" style="width:auto">
 <label for="sortby">Sort by</label>
 <select id="sortby" name="sortby" onchange="simulate(0)" class="form-control">
 <option name="0" value="0">Description (A-Z)</option>
@@ -303,9 +303,13 @@ Report Bugs
 <option name="7" value="7">Quantity (Highest first)</option>
 </select>
 </div>
-<div class="col-sm-3 form-inline form-group-sm">
+<div class="col-sm-3 form-inline form-group-sm" style="width:auto">
  <label for="itemName"><i ></i></label>
 <input id="itemName" name="itemName" onsubmit="simulate(0)" class="form-control" placeholder="Search Items" type="search">
+</div>
+        <div class="col-sm-3 form-inline form-group-sm" style="width:auto">
+<!--<button class="btn btn-primary btn-sm" id="createItem">Add New Item</button>-->
+    <a onclick="simulate(0)" id="search" class="btn btn-success" style="border-radius: 0;">search</a>
 </div>
 </form>
 </div>
@@ -472,6 +476,7 @@ Report Bugs
             <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
         </ul>    </ul>-->
 </div></div>
+{% include "page.html" %}
 </div>
 
 </div>
@@ -696,7 +701,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
         }
     }
 
-    function submit(){
+    function submit_form(){
         if ($('#itemName') == 'Item Name' || $('#itemName') == '') {
             alert('Item Name cannot be none!')
         }else if ($('#QIS') == 'Quanity In Stock' || $('#QOO') == ''){

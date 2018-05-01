@@ -245,7 +245,7 @@ Report Bugs
 					<span id="lab_login">New Customer Info</span>
 
 				</div>
-                <form id="add_new_customer" action="{% url 'addCustomer' %}" method="post">{% csrf_token %}
+                <form id="add_new_customer" action="{% url 'addCustomer' %}" method="get"><!--{% csrf_token %}-->
 				<div id="form_container2" style="padding-top: 25px;">
 
 					<input class="form-control" placeholder="First Name" name="firstName" id="firstName" type="text">
@@ -260,7 +260,7 @@ Report Bugs
 
 				</div>
                 </form>
-                <a href="" onclick="submit();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
+                <a href="" onclick="submit_form();"><input value="submit" class="btn btn-success" id="submit" type="button"></a>
 			</div>
 		</div>
 <div class="row">
@@ -277,7 +277,7 @@ Report Bugs
 </div>
     <input hidden id="pageNumber" value="{{ limit }}">
     <input hidden id="sortNumber" value="{{ sortNumber }}">
-    <form id="formSearch" action="/customer" method="get">
+    <form id="formSearch" action="{% url 'customer' %}" method="get">
 <div class="col-sm-3 form-inline form-group-sm">
 <label for="limit">Show</label>
 <select id="limit" onchange="simulate(0)" name="limit" class="form-control">
@@ -445,6 +445,7 @@ Report Bugs
             <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
         </ul>    </ul>-->
 </div></div>
+{% include "page.html" %}
 </div>
 
 </div>
@@ -571,7 +572,7 @@ Copyright <a href="http://www.github.com/lizenan">zenan li</a> (2018)
         }
     }
 
-    function submit(){
+    function submit_form(){
         if ($('#firstName') == 'First Name' || $('#firstName') == '') {
             alert('Fisrt Name cannot be none!')
         }else if ($('#lastName') == 'Last Name' || $('#lastName') == ''){

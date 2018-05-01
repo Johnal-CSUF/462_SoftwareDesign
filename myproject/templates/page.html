@@ -1,0 +1,20 @@
+<div class="col-sm-12 text-center">
+    <ul class="pagination">
+
+            <ul class="pagination"><li><a onclick="simulate({{1}})"><b style="color:black">First Page</b></a></li></ul>
+        {% if currentPage != 0 %}
+            <ul class="pagination"><li><a onclick="simulate({{currentPage}})"><b style="color:black">Pervious Page</b></a></li></ul>
+        {% endif %}
+    {% if currentPage != lastPage %}
+            <ul class="pagination"><li><a onclick="simulate({{nextPage}})"><b style="color:black">Next Page</b></a></li></ul>
+        {% endif %}
+            <ul class="pagination"><li><a onclick="simulate({{totalPageNumber}})"><b style="color:black">Last Page</b></a></li></ul>
+
+            <!--<a href="" onclick="return lilt(this.href);" data-ci-pagination-page="2">2</a></li><li>
+            <a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/3" onclick="return lilt(this.href);" data-ci-pagination-page="3">3</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/4" onclick="return lilt(this.href);" data-ci-pagination-page="4">4</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/5" onclick="return lilt(this.href);" data-ci-pagination-page="5">5</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/6" onclick="return lilt(this.href);" data-ci-pagination-page="6">6</a></li>
+            <li><a href="https://1410inc.xyz/mini-inventory-and-sales-management-system/items/lilt/2" onclick="return lilt(this.href);" data-ci-pagination-page="2" rel="next">&gt;&gt;</a></li>
+        </ul>    </ul>-->
+</div></div>
